@@ -312,7 +312,7 @@ graph TD
 > - FFI requires `extern "C"`、`#[repr(C)]` and careful pointer/lifetime handling<br><span class="zh-inline">FFI 里必须认真处理 `extern "C"`、`#[repr(C)]`、指针和生命周期</span>
 > - Arena and slab allocators trade general-purpose flexibility for predictability and speed<br><span class="zh-inline">arena 和 slab 分配器拿通用性换来了更强的可预测性和更高的分配效率</span>
 
-> **See also:** [Ch 4 — PhantomData](ch04-phantomdata-types-that-carry-no-data.md) for how variance and drop-check interact with unsafe code. [Ch 8 — Smart Pointers](ch08-smart-pointers-and-interior-mutability.md) for `Pin` and self-referential types.<br><span class="zh-inline">**延伸阅读：** 想看变型与 drop check 怎么和 unsafe 互动，可以看 [第 4 章：PhantomData](ch04-phantomdata-types-that-carry-no-data.md)；想看 `Pin` 和自引用类型，可以看 [第 8 章：智能指针](ch08-smart-pointers-and-interior-mutability.md)。</span>
+> **See also:** [Ch 4 — PhantomData](ch04-phantomdata-types-that-carry-no-data.md) for how variance and drop-check interact with unsafe code. [Ch 9 — Smart Pointers](ch09-smart-pointers-and-interior-mutability.md) for `Pin` and self-referential types.<br><span class="zh-inline">**延伸阅读：** 想看变型与 drop check 怎么和 unsafe 互动，可以看 [第 4 章：PhantomData](ch04-phantomdata-types-that-carry-no-data.md)；想看 `Pin` 和自引用类型，可以看 [第 9 章：智能指针](ch09-smart-pointers-and-interior-mutability.md)。</span>
 
 ---
 

@@ -180,7 +180,7 @@ impl UserService {
 }
 ```
 
-Rust 这里不是“空安全做得更认真一点”，而是思路根本不同。<br><span class="zh-inline">在 Rust 里，可选值就是 `Option<T>`，不写出来就不允许默认存在；在 C# 里，哪怕有可空引用类型加成，很多空值问题本质上还是靠规则和警告在兜。</span>
+Rust is not just “null safety, but stricter”; the whole mental model is different.<br><span class="zh-inline">在 Rust 里，可选值就是 `Option<T>`，不写出来就不允许默认存在；在 C# 里，哪怕有可空引用类型加成，很多空值问题本质上还是靠规则和警告在兜。</span>
 
 ### 2. Hidden Exceptions and Control Flow<br><span class="zh-inline">2. 隐藏的异常与控制流</span>
 

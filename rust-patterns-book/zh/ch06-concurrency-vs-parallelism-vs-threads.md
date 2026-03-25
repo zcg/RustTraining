@@ -422,7 +422,7 @@ impl<T: Copy> SeqLock<T> {
 > - Use `OnceLock`/`LazyLock` instead of `lazy_static!`; use `Mutex` before reaching for atomics<br><span class="zh-inline">惰性初始化优先用 `OnceLock`、`LazyLock`；共享状态优先从 `Mutex` 开始，而不是一上来就堆原子操作</span>
 > - Lock-free code is hard — prefer proven crates over hand-rolled implementations<br><span class="zh-inline">无锁代码很难写稳，成熟 crate 通常比手写实现更值得信赖</span>
 
-> **See also:** [Ch 5 — Channels](ch05-channels-and-message-passing.md) for message-passing concurrency. [Ch 8 — Smart Pointers](ch08-smart-pointers-and-interior-mutability.md) for Arc/Rc details.<br><span class="zh-inline">**延伸阅读：** 想看消息传递风格的并发，可以接着读 [第 5 章：Channel](ch05-channels-and-message-passing.md)；想看 `Arc`、`Rc` 这些智能指针细节，可以看 [第 8 章：智能指针](ch08-smart-pointers-and-interior-mutability.md)。</span>
+> **See also:** [Ch 5 — Channels](ch05-channels-and-message-passing.md) for message-passing concurrency. [Ch 9 — Smart Pointers](ch09-smart-pointers-and-interior-mutability.md) for Arc/Rc details.<br><span class="zh-inline">**延伸阅读：** 想看消息传递风格的并发，可以接着读 [第 5 章：Channel](ch05-channels-and-message-passing.md)；想看 `Arc`、`Rc` 这些智能指针细节，可以看 [第 9 章：智能指针](ch09-smart-pointers-and-interior-mutability.md)。</span>
 
 ```mermaid
 flowchart TD

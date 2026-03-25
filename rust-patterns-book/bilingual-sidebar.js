@@ -30,6 +30,30 @@
     }
   }
 
+  function analyzeText(text) {
+    const normalized = (text || "").replace(/\s+/g, " ").trim();
+    return {
+      text: normalized,
+      han: (normalized.match(/[\u3400-\u9fff]/g) || []).length,
+      latin: (normalized.match(/[A-Za-z]/g) || []).length,
+    };
+  }
+
+  function analyzeNodes(nodes) {
+    return analyzeText(nodes.map((node) => node.textContent || "").join(" "));
+  }
+
+  function detectLanguage(stats) {
+    if (!stats.text) return "unknown";
+    if (stats.han > 0) return "zh";
+    if (stats.latin >= 3) return "en";
+    return "mixed";
+  }
+
+  function appendNodeList(target, nodes) {
+    nodes.forEach((node) => target.appendChild(node));
+  }
+
   function renderInlinePair(zhNode) {
     const container = zhNode.parentElement;
     if (!container || container.dataset.biReady === "1") return;
@@ -43,22 +67,44 @@
     if (!englishNodes.length) return;
 
     const inSidebar = !!container.closest(".sidebar, .sidebar-scrollbox, .menu-title");
+    const englishStats = analyzeNodes(englishNodes);
+    const zhStats = analyzeText(zhNode.textContent || "");
+    const englishLang = detectLanguage(englishStats);
+    const zhLang = detectLanguage(zhStats);
+    const shouldSwap = englishLang !== "en" && englishStats.han > 0 && zhLang === "en";
+    const shouldUseZhStyleForLower = !shouldSwap && englishLang !== "en" && englishStats.han > 0;
 
-    const zh = document.createElement("span");
-    zh.className = inSidebar ? "bi-zh" : "bi-main-zh";
-    while (zhNode.firstChild) {
-      zh.appendChild(zhNode.firstChild);
+    const upper = document.createElement("span");
+    const lower = document.createElement("span");
+
+    if (shouldSwap) {
+      upper.className = inSidebar ? "bi-zh" : "bi-main-zh";
+      lower.className = inSidebar ? "bi-en" : "bi-main-en";
+      appendNodeList(upper, englishNodes);
+      while (zhNode.firstChild) {
+        lower.appendChild(zhNode.firstChild);
+      }
+    } else {
+      upper.className = zhLang === "en" ? (inSidebar ? "bi-en" : "bi-main-en") : (inSidebar ? "bi-zh" : "bi-main-zh");
+      lower.className = shouldUseZhStyleForLower
+        ? inSidebar
+          ? "bi-zh bi-zh-alt"
+          : "bi-main-zh bi-main-zh-alt"
+        : inSidebar
+          ? "bi-en"
+          : "bi-main-en";
+
+      while (zhNode.firstChild) {
+        upper.appendChild(zhNode.firstChild);
+      }
+      appendNodeList(lower, englishNodes);
     }
 
-    const en = document.createElement("span");
-    en.className = inSidebar ? "bi-en" : "bi-main-en";
-    englishNodes.forEach((node) => en.appendChild(node));
-
-    if (!en.querySelector("strong")) {
+    if (!lower.querySelector("strong")) {
       container.classList.add("no-number");
     }
 
-    container.replaceChildren(zh, en);
+    container.replaceChildren(upper, lower);
     container.dataset.biReady = "1";
   }
 

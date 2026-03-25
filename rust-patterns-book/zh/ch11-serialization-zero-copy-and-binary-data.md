@@ -333,7 +333,7 @@ fn main() {
 > - 零拷贝反序列化适合高读负载，但前提是输入缓冲区寿命足够长<br><span class="zh-inline">零拷贝反序列化适合高读负载，但前提是输入缓冲区寿命足够长</span>
 > - `repr(C)`、`zerocopy`、`bytemuck` 适合低层二进制布局处理；`Bytes` 适合共享缓冲区<br><span class="zh-inline">`repr(C)`、`zerocopy`、`bytemuck` 适合低层二进制布局处理；`Bytes` 适合共享缓冲区</span>
 
-> **See also:** [Ch 9 — Error Handling](ch09-error-handling-patterns.md) for integrating serde errors, and [Ch 12 — Unsafe Rust](ch12-unsafe-rust-controlled-danger.md) for `repr(C)` and low-level layout concerns.<br><span class="zh-inline">**延伸阅读：** 想看 `serde` 错误怎么整合进错误系统，可以看 [第 9 章：错误处理](ch09-error-handling-patterns.md)；想看 `repr(C)` 和底层布局的更多细节，可以看 [第 12 章：Unsafe Rust](ch12-unsafe-rust-controlled-danger.md)。</span>
+> **See also:** [Ch 10 — Error Handling](ch10-error-handling-patterns.md) for integrating serde errors, and [Ch 12 — Unsafe Rust](ch12-unsafe-rust-controlled-danger.md) for `repr(C)` and low-level layout concerns.<br><span class="zh-inline">**延伸阅读：** 想看 `serde` 错误怎么整合进错误系统，可以看 [第 10 章：错误处理](ch10-error-handling-patterns.md)；想看 `repr(C)` 和底层布局的更多细节，可以看 [第 12 章：Unsafe Rust](ch12-unsafe-rust-controlled-danger.md)。</span>
 
 ```mermaid
 flowchart LR

@@ -8,7 +8,7 @@
 
 ---
 
-A practical guide to using Rust's type system to make entire classes of bugs **impossible to compile**. While the companion [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md) book covers the mechanics (traits, associated types, type-state), this guide shows how to **apply** those mechanics to real-world domains — hardware diagnostics, cryptography, protocol validation, and embedded systems.<br><span class="zh-inline">这是一本强调“如何把一整类错误变成**根本无法通过编译**”的实战指南。姊妹教材 [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md) 负责讲清 trait、关联类型、类型状态这些机制本身，而这本书要讲的是：如何把这些机制真正落到硬件诊断、密码学、协议验证和嵌入式系统这些真实领域里。</span>
+A practical guide to using Rust's type system to make entire classes of bugs **impossible to compile**. While the companion [Rust Patterns](../rust-patterns-book/) book covers the mechanics (traits, associated types, type-state), this guide shows how to **apply** those mechanics to real-world domains — hardware diagnostics, cryptography, protocol validation, and embedded systems.<br><span class="zh-inline">这是一本强调“如何把一整类错误变成**根本无法通过编译**”的实战指南。姊妹教材 [Rust Patterns](../rust-patterns-book/) 负责讲清 trait、关联类型、类型状态这些机制本身，而这本书要讲的是：如何把这些机制真正落到硬件诊断、密码学、协议验证和嵌入式系统这些真实领域里。</span>
 
 Every pattern here follows one principle: **push invariants from runtime checks into the type system so the compiler enforces them.**<br><span class="zh-inline">这里所有模式都围绕同一个原则：**把原本依赖运行时检查的不变量，前移到类型系统里，让编译器来强制执行。**</span>
 
@@ -61,11 +61,11 @@ Every pattern here follows one principle: **push invariants from runtime checks 
 
 | Concept | Where to learn it |
 |---------|-------------------|
-| Ownership and borrowing<br><span class="zh-inline">所有权与借用</span> | [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md), ch01<br><span class="zh-inline">可参考 Rust Patterns 第 1 章。</span> |
-| Traits and associated types<br><span class="zh-inline">Trait 与关联类型</span> | [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md), ch02<br><span class="zh-inline">可参考 Rust Patterns 第 2 章。</span> |
-| Newtypes and type-state<br><span class="zh-inline">Newtype 与类型状态</span> | [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md), ch03<br><span class="zh-inline">可参考 Rust Patterns 第 3 章。</span> |
-| PhantomData<br><span class="zh-inline">PhantomData</span> | [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md), ch04<br><span class="zh-inline">可参考 Rust Patterns 第 4 章。</span> |
-| Generics and trait bounds<br><span class="zh-inline">泛型与 trait 约束</span> | [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md), ch01<br><span class="zh-inline">可参考 Rust Patterns 第 1 章。</span> |
+| Ownership and borrowing<br><span class="zh-inline">所有权与借用</span> | [Rust Patterns](../rust-patterns-book/), ch01<br><span class="zh-inline">可参考 Rust Patterns 第 1 章。</span> |
+| Traits and associated types<br><span class="zh-inline">Trait 与关联类型</span> | [Rust Patterns](../rust-patterns-book/), ch02<br><span class="zh-inline">可参考 Rust Patterns 第 2 章。</span> |
+| Newtypes and type-state<br><span class="zh-inline">Newtype 与类型状态</span> | [Rust Patterns](../rust-patterns-book/), ch03<br><span class="zh-inline">可参考 Rust Patterns 第 3 章。</span> |
+| PhantomData<br><span class="zh-inline">PhantomData</span> | [Rust Patterns](../rust-patterns-book/), ch04<br><span class="zh-inline">可参考 Rust Patterns 第 4 章。</span> |
+| Generics and trait bounds<br><span class="zh-inline">泛型与 trait 约束</span> | [Rust Patterns](../rust-patterns-book/), ch01<br><span class="zh-inline">可参考 Rust Patterns 第 1 章。</span> |
 
 ## The Correct-by-Construction Spectrum<br><span class="zh-inline">Correct-by-Construction 光谱</span>
 

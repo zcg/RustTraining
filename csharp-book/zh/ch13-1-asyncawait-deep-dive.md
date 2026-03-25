@@ -253,6 +253,6 @@ fn make_future() -> Pin<Box<dyn Future<Output = i32> + Send>> {
 - `tokio::select!` (use the `pin!()` macro)<br><span class="zh-inline">`tokio::select!` 一类场景，需要配合 `pin!()` 宏。</span>
 - Trait methods returning `dyn Future` (use `Box::pin(async { ... })`)<br><span class="zh-inline">trait 方法返回 `dyn Future` 时，通常要用 `Box::pin(async { ... })`。</span>
 
-> **Want the deep dive?** The companion [Async Rust Training](../../async-book/src/ch04-pin-and-unpin.md) covers Pin, Unpin, self-referential structs, and structural pinning in full detail.<br><span class="zh-inline">**想深挖？** 配套材料 [Async Rust Training](../../async-book/src/ch04-pin-and-unpin.md) 会系统讲 `Pin`、`Unpin`、自引用结构体和结构性 pin。</span>
+> **Want the deep dive?** The companion [Async Rust Training](../async-book/ch04-pin-and-unpin.html) covers Pin, Unpin, self-referential structs, and structural pinning in full detail.<br><span class="zh-inline">**想深挖？** 配套材料 [Async Rust Training](../async-book/ch04-pin-and-unpin.html) 会系统讲 `Pin`、`Unpin`、自引用结构体和结构性 pin。</span>
 
 ***

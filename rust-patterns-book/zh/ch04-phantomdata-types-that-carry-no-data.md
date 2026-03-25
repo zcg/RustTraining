@@ -308,7 +308,7 @@ fn main() {
 > - Use it for lifetime branding, variance control, and unit-of-measure patterns<br><span class="zh-inline">它最常见的用途是生命周期品牌、变型控制和单位模式</span>
 > - Drop check: `PhantomData<T>` tells the compiler your type logically owns a `T`<br><span class="zh-inline">在 drop check 里，`PhantomData&lt;T&gt;` 的意思是“这个类型在逻辑上拥有一个 `T`”</span>
 
-> **See also:** [Ch 3 — Newtype & Type-State](ch03-the-newtype-and-type-state-patterns.md) for type-state patterns that use PhantomData. [Ch 11 — Unsafe Rust](ch11-unsafe-rust-controlled-danger.md) for how PhantomData interacts with raw pointers.<br><span class="zh-inline">**延伸阅读：** 想看使用 PhantomData 的类型状态模式，可以继续读 [第 3 章：Newtype 与类型状态](ch03-the-newtype-and-type-state-patterns.md)；想看它和裸指针如何配合，可以看 [第 11 章：Unsafe Rust](ch11-unsafe-rust-controlled-danger.md)。</span>
+> **See also:** [Ch 3 — Newtype & Type-State](ch03-the-newtype-and-type-state-patterns.md) for type-state patterns that use PhantomData. [Ch 12 — Unsafe Rust](ch12-unsafe-rust-controlled-danger.md) for how PhantomData interacts with raw pointers.<br><span class="zh-inline">**延伸阅读：** 想看使用 PhantomData 的类型状态模式，可以继续读 [第 3 章：Newtype 与类型状态](ch03-the-newtype-and-type-state-patterns.md)；想看它和裸指针如何配合，可以看 [第 12 章：Unsafe Rust](ch12-unsafe-rust-controlled-danger.md)。</span>
 
 ---
 

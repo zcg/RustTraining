@@ -270,7 +270,7 @@ Public crate APIs often deserve dedicated benchmarks in `benches/`, especially p
 > - Use `#[non_exhaustive]`、`#[must_use]` and sealed traits deliberately to stabilize public APIs.<br><span class="zh-inline">合理使用 `#[non_exhaustive]`、`#[must_use]` 和 sealed trait，可以显著提升公开 API 的稳定性。</span>
 > - Features, workspaces, and Cargo configuration are part of crate architecture, not just build trivia.<br><span class="zh-inline">feature、workspace 和 Cargo 配置本身就是 crate 架构的一部分，不只是构建细节。</span>
 
-> **See also:** [Ch 9 — Error Handling](ch09-error-handling-patterns.md) and [Ch 13 — Testing](ch13-testing-and-benchmarking-patterns.md).<br><span class="zh-inline">**延伸阅读：** 相关主题还可以接着看 [第 9 章：错误处理](ch09-error-handling-patterns.md) 和 [第 13 章：测试](ch13-testing-and-benchmarking-patterns.md)。</span>
+> **See also:** [Ch 10 — Error Handling](ch10-error-handling-patterns.md) and [Ch 14 — Testing](ch14-testing-and-benchmarking-patterns.md).<br><span class="zh-inline">**延伸阅读：** 相关主题还可以接着看 [第 10 章：错误处理](ch10-error-handling-patterns.md) 和 [第 14 章：测试](ch14-testing-and-benchmarking-patterns.md)。</span>
 
 ---
 

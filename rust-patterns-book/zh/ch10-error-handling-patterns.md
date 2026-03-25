@@ -185,7 +185,7 @@ match result {
 > - `#[from]` auto-generates `From` impls; `.context()` adds human-readable wrappers<br><span class="zh-inline">`#[from]` 会自动生成 `From` 实现，而 `.context()` 负责补充人类可读的上下文。</span>
 > - `?` desugars to `From::from()` + early return; works in `main()` returning `Result`<br><span class="zh-inline">`?` 会展开成 `From::from()` 加提前返回，而且在返回 `Result` 的 `main()` 里一样能用。</span>
 
-> **See also:** [Ch 14 — API Design](ch14-crate-architecture-and-api-design.md) for "parse, don't validate" patterns. [Ch 10 — Serialization](ch10-serialization-zero-copy-and-binary-data.md) for serde error handling.<br><span class="zh-inline">**继续阅读：** [第 14 章：API 设计](ch14-crate-architecture-and-api-design.md) 会讲“parse, don't validate”；[第 10 章：序列化](ch10-serialization-zero-copy-and-binary-data.md) 会讲 serde 相关的错误处理。</span>
+> **See also:** [Ch 15 — API Design](ch15-crate-architecture-and-api-design.md) for "parse, don't validate" patterns. [Ch 11 — Serialization](ch11-serialization-zero-copy-and-binary-data.md) for serde error handling.<br><span class="zh-inline">**继续阅读：** [第 15 章：API 设计](ch15-crate-architecture-and-api-design.md) 会讲“parse, don't validate”；[第 11 章：序列化](ch11-serialization-zero-copy-and-binary-data.md) 会讲 serde 相关的错误处理。</span>
 
 ```mermaid
 flowchart LR

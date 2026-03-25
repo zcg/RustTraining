@@ -103,38 +103,38 @@ OS threads, scoped threads, rayon, Mutex/RwLock/Atomics, Condvar, OnceLock, lock
 **[7. Closures and Higher-Order Functions](ch07-closures-and-higher-order-functions.md)** 🟢<br><span class="zh-inline">**[7. 闭包与高阶函数](ch07-closures-and-higher-order-functions.md)** 🟢</span>
 `Fn`/`FnMut`/`FnOnce`, closures as parameters/return values, combinators, higher-order APIs.<br><span class="zh-inline">`Fn` / `FnMut` / `FnOnce`、闭包作为参数和返回值、组合器、高阶 API。</span>
 
-**[8. Smart Pointers and Interior Mutability](ch08-smart-pointers-and-interior-mutability.md)** 🟡<br><span class="zh-inline">**[8. 智能指针与内部可变性](ch08-smart-pointers-and-interior-mutability.md)** 🟡</span>
+**[9. Smart Pointers and Interior Mutability](ch09-smart-pointers-and-interior-mutability.md)** 🟡<br><span class="zh-inline">**[9. 智能指针与内部可变性](ch09-smart-pointers-and-interior-mutability.md)** 🟡</span>
 Box, Rc, Arc, Weak, Cell/RefCell, Cow, Pin, ManuallyDrop.<br><span class="zh-inline">Box、Rc、Arc、Weak、Cell / RefCell、Cow、Pin、ManuallyDrop。</span>
 
 ### Part III: Systems & Production<br><span class="zh-inline">第三部分：系统与生产实践</span>
 
-**[9. Error Handling Patterns](ch09-error-handling-patterns.md)** 🟢<br><span class="zh-inline">**[9. 错误处理模式](ch09-error-handling-patterns.md)** 🟢</span>
+**[10. Error Handling Patterns](ch10-error-handling-patterns.md)** 🟢<br><span class="zh-inline">**[10. 错误处理模式](ch10-error-handling-patterns.md)** 🟢</span>
 thiserror vs anyhow, `#[from]`, `.context()`, `?` operator, panics.<br><span class="zh-inline">thiserror 与 anyhow、`#[from]`、`.context()`、`?` 运算符、panic。</span>
 
-**[10. Serialization, Zero-Copy, and Binary Data](ch10-serialization-zero-copy-and-binary-data.md)** 🟡<br><span class="zh-inline">**[10. 序列化、零拷贝与二进制数据](ch10-serialization-zero-copy-and-binary-data.md)** 🟡</span>
+**[11. Serialization, Zero-Copy, and Binary Data](ch11-serialization-zero-copy-and-binary-data.md)** 🟡<br><span class="zh-inline">**[11. 序列化、零拷贝与二进制数据](ch11-serialization-zero-copy-and-binary-data.md)** 🟡</span>
 serde fundamentals, enum representations, zero-copy deserialization, `repr(C)`, `bytes::Bytes`.<br><span class="zh-inline">serde 基础、枚举表示方式、零拷贝反序列化、`repr(C)`、`bytes::Bytes`。</span>
 
-**[11. Unsafe Rust — Controlled Danger](ch11-unsafe-rust-controlled-danger.md)** 🔴<br><span class="zh-inline">**[11. Unsafe Rust：受控的危险](ch11-unsafe-rust-controlled-danger.md)** 🔴</span>
+**[12. Unsafe Rust — Controlled Danger](ch12-unsafe-rust-controlled-danger.md)** 🔴<br><span class="zh-inline">**[12. Unsafe Rust：受控的危险](ch12-unsafe-rust-controlled-danger.md)** 🔴</span>
 Five superpowers, sound abstractions, FFI, UB pitfalls, arena/slab allocators.<br><span class="zh-inline">五大超能力、健全抽象、FFI、UB 陷阱、arena / slab 分配器。</span>
 
-**[12. Macros — Code That Writes Code](ch12-macros-code-that-writes-code.md)** 🟡<br><span class="zh-inline">**[12. 宏：会写代码的代码](ch12-macros-code-that-writes-code.md)** 🟡</span>
+**[13. Macros — Code That Writes Code](ch13-macros-code-that-writes-code.md)** 🟡<br><span class="zh-inline">**[13. 宏：会写代码的代码](ch13-macros-code-that-writes-code.md)** 🟡</span>
 `macro_rules!`, when (not) to use macros, proc macros, derive macros, `syn`/`quote`.<br><span class="zh-inline">`macro_rules!`、何时该用宏、何时别用宏、过程宏、派生宏、`syn` / `quote`。</span>
 
-**[13. Testing and Benchmarking Patterns](ch13-testing-and-benchmarking-patterns.md)** 🟢<br><span class="zh-inline">**[13. 测试与基准模式](ch13-testing-and-benchmarking-patterns.md)** 🟢</span>
+**[14. Testing and Benchmarking Patterns](ch14-testing-and-benchmarking-patterns.md)** 🟢<br><span class="zh-inline">**[14. 测试与基准模式](ch14-testing-and-benchmarking-patterns.md)** 🟢</span>
 Unit/integration/doc tests, proptest, criterion, mocking strategies.<br><span class="zh-inline">单元测试、集成测试、文档测试、proptest、criterion、mock 策略。</span>
 
-**[14. Crate Architecture and API Design](ch14-crate-architecture-and-api-design.md)** 🟡<br><span class="zh-inline">**[14. Crate 架构与 API 设计](ch14-crate-architecture-and-api-design.md)** 🟡</span>
+**[15. Crate Architecture and API Design](ch15-crate-architecture-and-api-design.md)** 🟡<br><span class="zh-inline">**[15. Crate 架构与 API 设计](ch15-crate-architecture-and-api-design.md)** 🟡</span>
 Module layout, API design checklist, ergonomic parameters, feature flags, workspaces.<br><span class="zh-inline">模块布局、API 设计清单、易用参数设计、feature flag、workspace。</span>
 
-**[15. Async/Await Essentials](ch15-asyncawait-essentials.md)** 🔴<br><span class="zh-inline">**[15. Async/Await 核心要点](ch15-asyncawait-essentials.md)** 🔴</span>
+**[16. Async/Await Essentials](ch16-asyncawait-essentials.md)** 🔴<br><span class="zh-inline">**[16. Async/Await 核心要点](ch16-asyncawait-essentials.md)** 🔴</span>
 Futures, Tokio quick-start, common pitfalls. (For deep async coverage, see our Async Rust Training.)<br><span class="zh-inline">Future、Tokio 快速上手、常见陷阱。若想系统深挖 async，请继续看配套的 Async Rust Training。</span>
 
 ### Appendices<br><span class="zh-inline">附录</span>
 
-**[Summary and Reference Card](ch17-summary-and-reference-card.md)**<br><span class="zh-inline">**[总结与参考卡片](ch17-summary-and-reference-card.md)**</span>
+**[Summary and Reference Card](ch18-summary-and-reference-card.md)**<br><span class="zh-inline">**[总结与参考卡片](ch18-summary-and-reference-card.md)**</span>
 Pattern decision guide, trait bounds cheat sheet, lifetime elision rules, further reading.<br><span class="zh-inline">模式选择指南、trait bound 速查、生命周期省略规则，以及延伸阅读。</span>
 
-**[Capstone Project: Type-Safe Task Scheduler](ch18-capstone-project.md)**<br><span class="zh-inline">**[综合项目：类型安全任务调度器](ch18-capstone-project.md)**</span>
+**[Capstone Project: Type-Safe Task Scheduler](ch19-capstone-project.md)**<br><span class="zh-inline">**[综合项目：类型安全任务调度器](ch19-capstone-project.md)**</span>
 Integrate generics, traits, typestate, channels, error handling, and testing into a complete system.<br><span class="zh-inline">把泛型、trait、typestate、channel、错误处理与测试整合成一个完整系统。</span>
 
 ***

@@ -6,7 +6,7 @@
 
 Unsafe Rust allows operations that the borrow checker cannot verify. It should be used sparingly, and every use最好都带着清晰的边界与说明。<br><span class="zh-inline">unsafe Rust 允许开发者做一些借用检查器无法验证的操作。它不是洪水猛兽，但确实应该少用，而且每一处都得把边界和理由讲明白。</span>
 
-> **Advanced coverage**: For safe abstraction patterns over unsafe code, such as arena allocators, lock-free structures, and custom vtables, see [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md).<br><span class="zh-inline">**更深入的延伸阅读：** 如果想继续看如何在 unsafe 之上建立安全抽象，例如 arena 分配器、无锁结构和自定义 vtable，可以去读 [Rust Patterns](../../rust-patterns-book/src/SUMMARY.md)。</span>
+> **Advanced coverage**: For safe abstraction patterns over unsafe code, such as arena allocators, lock-free structures, and custom vtables, see [Rust Patterns](../rust-patterns-book/).<br><span class="zh-inline">**更深入的延伸阅读：** 如果想继续看如何在 unsafe 之上建立安全抽象，例如 arena 分配器、无锁结构和自定义 vtable，可以去读 [Rust Patterns](../rust-patterns-book/)。</span>
 
 ### When You Need Unsafe<br><span class="zh-inline">什么时候会需要 unsafe</span>
 
