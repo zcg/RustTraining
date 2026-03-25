@@ -4,7 +4,7 @@
 >
 > **Difficulty:** 🔴 Advanced<br><span class="zh-inline">**难度：** 🔴 高阶</span>
 
-> **Deep dive**: For production async patterns such as stream processing, graceful shutdown, connection pooling, and cancellation safety, see the companion [Async Rust Training](../../source-docs/ASYNC_RUST_TRAINING.md) guide.<br><span class="zh-inline">**深入阅读：** 如果要继续看生产环境里的异步模式，例如流处理、优雅停机、连接池、取消安全，可以接着读配套的 [Async Rust Training](../../source-docs/ASYNC_RUST_TRAINING.md) 指南。</span>
+> **Deep dive**: For production async patterns such as stream processing, graceful shutdown, connection pooling, and cancellation safety, see the companion [Async Rust Training](../../async-book/src/SUMMARY.md) guide.<br><span class="zh-inline">**深入阅读：** 如果要继续看生产环境里的异步模式，例如流处理、优雅停机、连接池、取消安全，可以接着读配套的 [Async Rust Training](../../async-book/src/SUMMARY.md) 指南。</span>
 >
 > **Prerequisites**: [Ownership & Borrowing](ch07-ownership-and-borrowing.md) and [Smart Pointers](ch07-3-smart-pointers-beyond-single-ownership.md).<br><span class="zh-inline">**前置知识：** 先掌握 [所有权与借用](ch07-ownership-and-borrowing.md) 以及 [智能指针](ch07-3-smart-pointers-beyond-single-ownership.md) 会更顺。</span>
 

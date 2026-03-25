@@ -152,7 +152,7 @@ This material works both as an instructor-led course and for self-study. If you'
 - [Exercise: Generics](ch10-1-generics.md#exercise-generics)<br><span class="zh-inline">练习：泛型</span>
 - [Combining Rust traits and generics](ch10-1-generics.md#combining-rust-traits-and-generics)<br><span class="zh-inline">组合使用 Rust trait 与泛型</span>
 - [Rust traits constraints in data types](ch10-1-generics.md#rust-traits-constraints-in-data-types)<br><span class="zh-inline">数据类型中的 Rust trait 约束</span>
-- [Exercise: Traits constraints and generics](ch10-1-generics.md#exercise-traits-constraints-and-generics)<br><span class="zh-inline">练习：trait 约束与泛型</span>
+- [Exercise: Trait constraints and generics](ch10-1-generics.md#exercise-traits-constraints-and-generics)<br><span class="zh-inline">练习：trait 约束与泛型</span>
 - [Rust type state pattern and generics](ch10-1-generics.md#rust-type-state-pattern-and-generics)<br><span class="zh-inline">Rust 类型状态模式与泛型</span>
 - [Rust builder pattern](ch10-1-generics.md#rust-builder-pattern)<br><span class="zh-inline">Rust Builder 模式</span>
 

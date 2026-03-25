@@ -55,7 +55,7 @@ Pick the book that matches your background. Books are grouped by complexity so y
 
 Each book has 15–16 chapters with Mermaid diagrams, editable Rust playgrounds, exercises, and full-text search.
 
-> **Tip:** You can read the markdown source directly on GitHub, or browse the rendered site with sidebar navigation and search at the GitHub Pages site (link in the repo's About section).
+> **Tip:** You can read the markdown source directly on GitHub, or browse the rendered site with sidebar navigation and search at the [GitHub Pages site](https://zcg.github.io/RustTraining/).
 >
 > **Local serving:** For the best reading experience (keyboard navigation between chapters, instant search, offline access), clone the repo and run:
 > ```
@@ -98,6 +98,6 @@ cd c-cpp-book && mdbook serve --open    # http://localhost:3000
 
 ### Deployment
 
-The site auto-deploys to GitHub Pages on push to `master` via `.github/workflows/pages.yml`. No manual steps needed.
+The site auto-deploys to GitHub Pages on push to `main` via `.github/workflows/pages.yml`. The deployment workflow runs `cargo xtask deploy`, uploads the generated `docs/` directory as a Pages artifact, and publishes it automatically.
 
 </details>

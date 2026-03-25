@@ -313,12 +313,12 @@ Structs in Rust fill many of the roles that classes cover in C#, but the storage
 graph TD
     subgraph "C# Class (Heap)"
         CObj["Object Header<br/>+ vtable ptr"] --> CFields["Name: string ref<br/>Age: int<br/>Hobbies: List ref"]
-        CFields --> CHeap1["\"Alice\" on heap"]
+        CFields --> CHeap1["#quot;Alice#quot; on heap"]
         CFields --> CHeap2["List&lt;string&gt; on heap"]
     end
     subgraph "Rust Struct (Stack)"
         RFields["name: String<br/>ptr | len | cap<br/>age: i32<br/>hobbies: Vec<br/>ptr | len | cap"]
-        RFields --> RHeap1["\"Alice\" heap buffer"]
+        RFields --> RHeap1["#quot;Alice#quot; heap buffer"]
         RFields --> RHeap2["Vec heap buffer"]
     end
 

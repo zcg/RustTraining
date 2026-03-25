@@ -293,12 +293,12 @@ Structs in Rust are similar to classes in C#, but with some key differences arou
 graph TD
     subgraph "C# Class (Heap)"
         CObj["Object Header\n+ vtable ptr"] --> CFields["Name: string ref\nAge: int\nHobbies: List ref"]
-        CFields --> CHeap1["\"Alice\" on heap"]
+        CFields --> CHeap1["#quot;Alice#quot; on heap"]
         CFields --> CHeap2["List&lt;string&gt; on heap"]
     end
     subgraph "Rust Struct (Stack)"
         RFields["name: String\n  ptr | len | cap\nage: i32\nhobbies: Vec\n  ptr | len | cap"]
-        RFields --> RHeap1["\"Alice\" heap buffer"]
+        RFields --> RHeap1["#quot;Alice#quot; heap buffer"]
         RFields --> RHeap2["Vec heap buffer"]
     end
 

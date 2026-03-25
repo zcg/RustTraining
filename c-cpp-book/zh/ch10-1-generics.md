@@ -3,7 +3,7 @@
 > **What you'll learn:** Generic type parameters, monomorphization (zero-cost generics), trait bounds, and how Rust generics compare to C++ templates — with better error messages and no SFINAE.<br><span class="zh-inline">**本章将学到什么：** 泛型类型参数是什么，单态化也就是零成本泛型怎么工作，trait bound 如何约束泛型，以及 Rust 泛型和 C++ 模板相比到底强在哪，尤其是错误信息和可读性这一块。</span>
 
 - Generics allow the same algorithm or data structure to be reused across data types<br><span class="zh-inline">泛型允许同一套算法或数据结构在不同数据类型上复用。</span>
-    - The generic parameter appears as an identifer within `<>`, e.g.: `<T>`. The parameter can have any legal identifier name, but is typically kept short for brevity<br><span class="zh-inline">泛型参数会写在 `<>` 里，例如 `<T>`。理论上名字可以随便起，只要是合法标识符；不过惯例上会保持简短。</span>
+    - The generic parameter appears as an identifier within `<>`, e.g.: `<T>`. The parameter can have any legal identifier name, but is typically kept short for brevity<br><span class="zh-inline">泛型参数会写在 `<>` 里，例如 `<T>`。理论上名字可以随便起，只要是合法标识符；不过惯例上会保持简短。</span>
     - The compiler performs monomorphization at compile time, i.e., it generates a new type for every variation of `T` that is encountered<br><span class="zh-inline">编译器会在编译期做单态化，也就是针对每一种实际出现的 `T` 都生成对应版本的实现。</span>
 
 ```rust

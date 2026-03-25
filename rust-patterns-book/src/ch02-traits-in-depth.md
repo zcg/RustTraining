@@ -90,9 +90,6 @@ the iterator rather than to the underlying collection:
 // }
 
 // With GATs (Rust 1.65+):
-// Note: This is a custom trait, distinct from std::iter::Iterator.
-// In real code, name it `LendingIterator` to avoid confusion with the
-// standard `Iterator` trait.
 trait LendingIterator {
     type Item<'a> where Self: 'a;
 
@@ -286,11 +283,11 @@ trait Drawable {
 let shapes: Vec<Box<dyn Drawable>> = vec![/* ... */]; // ✅ Works
 
 // ❌ NOT object-safe — uses Self in return position
-trait Clonable {
+trait Cloneable {
     fn clone_self(&self) -> Self;
     //                       ^^^^ Can't know the concrete size at runtime
 }
-// let items: Vec<Box<dyn Clonable>> = ...; // ❌ Compile error
+// let items: Vec<Box<dyn Cloneable>> = ...; // ❌ Compile error
 
 // ❌ NOT object-safe — generic method
 trait Converter {
@@ -1802,4 +1799,3 @@ fn main() {
 </details>
 
 ***
-

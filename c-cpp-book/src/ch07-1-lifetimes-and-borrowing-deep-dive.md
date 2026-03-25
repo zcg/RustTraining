@@ -15,7 +15,7 @@ fn main() {
     let _z = &x; // Permitted because the compiler knows y isn't subsequently used
     //println!("{y}"); // Will not compile if this is uncommented
     borrow_mut(&mut x); // Permitted because _z isn't used 
-    let z = &x; // Ok -- mutable borrow of x ended after foo() returned
+    let z = &x; // Ok -- mutable borrow of x ended after borrow_mut() returned
     println!("{z}");
 }
 ```

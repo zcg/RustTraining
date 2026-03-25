@@ -35,7 +35,7 @@ rustup component add llvm-tools-preview
 # Run tests and show per-file coverage summary
 cargo llvm-cov
 
-# Generate HTML report (browseable, line-by-line highlighting)
+# Generate HTML report (browsable, line-by-line highlighting)
 cargo llvm-cov --html
 # Output: target/llvm-cov/html/index.html
 

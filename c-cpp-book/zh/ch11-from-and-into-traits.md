@@ -106,14 +106,14 @@ fn main() {
 ### Other Rust type conversions<br><span class="zh-inline">Rust 的其他类型转换方式</span>
 
 - Rust doesn't support implicit type conversions and ```as``` can be used for ```explicit``` conversions<br><span class="zh-inline">Rust 不支持隐式类型转换，需要显式转换时可以使用 ```as```。</span>
-- ```as``` should be sparingly used because it's subject to loss of data by narrowing and so forth. In general, it's preferrable to use ```into()``` or ```from()``` where possible<br><span class="zh-inline">```as``` 要少用，因为它可能触发窄化转换，从而丢失数据。一般来说，能用 ```into()``` 或 ```from()``` 就尽量用它们。</span>
+- ```as``` should be sparingly used because it's subject to loss of data by narrowing and so forth. In general, it's preferable to use ```into()``` or ```from()``` where possible<br><span class="zh-inline">```as``` 要少用，因为它可能触发窄化转换，从而丢失数据。一般来说，能用 ```into()``` 或 ```from()``` 就尽量用它们。</span>
 
 ```rust
 fn main() {
     let f = 42u8;
     // let g : u32 = f;    // Will not compile
     let g = f as u32;      // Ok, but not preferred. Subject to rules around narrowing
-    let g : u32 = f.into(); // Most preferred form; infalliable and checked by the compiler
+let g : u32 = f.into(); // Most preferred form; infallible and checked by the compiler
     //let k : u8 = f.into();  // Fails to compile; narrowing can result in loss of data
     
     // Attempting a narrowing operation requires use of try_into

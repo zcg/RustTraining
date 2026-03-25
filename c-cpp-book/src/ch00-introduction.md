@@ -150,7 +150,7 @@ This material works both as an instructor-led course and for self-study. If you'
 - [Exercise: Generics](ch10-1-generics.md#exercise-generics)
 - [Combining Rust traits and generics](ch10-1-generics.md#combining-rust-traits-and-generics)
 - [Rust traits constraints in data types](ch10-1-generics.md#rust-traits-constraints-in-data-types)
-- [Exercise: Traits constraints and generics](ch10-1-generics.md#exercise-traits-constraints-and-generics)
+- [Exercise: Trait constraints and generics](ch10-1-generics.md#exercise-traits-constraints-and-generics)
 - [Rust type state pattern and generics](ch10-1-generics.md#rust-type-state-pattern-and-generics)
 - [Rust builder pattern](ch10-1-generics.md#rust-builder-pattern)
 
