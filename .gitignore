@@ -8,3 +8,5 @@ target/
 
 # Zone.Identifier files (Windows/WSL artifact)
 *:Zone.Identifier
+.ace-tool/
+.playwright-cli/

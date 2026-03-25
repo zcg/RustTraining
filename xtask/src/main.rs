@@ -5,48 +5,62 @@ use std::net::TcpListener;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-/// (slug, title, description, category)
-const BOOKS: &[(&str, &str, &str, &str)] = &[
+/// (slug, title_en, title_zh, desc_en, desc_zh, category)
+const BOOKS: &[(&str, &str, &str, &str, &str, &str)] = &[
     (
         "c-cpp-book",
         "Rust for C/C++ Programmers",
+        "Rust 面向 C/C++ 程序员",
         "Move semantics, RAII, FFI, embedded, no_std",
+        "移动语义、RAII、FFI、嵌入式与 no_std",
         "bridge",
     ),
     (
         "csharp-book",
         "Rust for C# Programmers",
+        "Rust 面向 C# 程序员",
         "Best for Swift / C# / Java developers",
+        "适合 Swift / C# / Java 开发者",
         "bridge",
     ),
     (
         "python-book",
         "Rust for Python Programmers",
+        "Rust 面向 Python 程序员",
         "Dynamic → static typing, GIL-free concurrency",
+        "从动态类型走向静态类型，摆脱 GIL 的并发",
         "bridge",
     ),
     (
         "async-book",
         "Async Rust: From Futures to Production",
+        "Async Rust：从 Future 到生产环境",
         "Tokio, streams, cancellation safety",
+        "Tokio、流与取消安全",
         "deep-dive",
     ),
     (
         "rust-patterns-book",
         "Rust Patterns",
+        "Rust 模式精讲",
         "Pin, allocators, lock-free structures, unsafe",
+        "Pin、分配器、无锁结构与 unsafe",
         "advanced",
     ),
     (
         "type-driven-correctness-book",
         "Type-Driven Correctness",
+        "类型驱动的正确性",
         "Type-state, phantom types, capability tokens",
+        "类型状态、幻类型与能力令牌",
         "expert",
     ),
     (
         "engineering-book",
         "Rust Engineering Practices",
+        "Rust 工程实践",
         "Build scripts, cross-compilation, coverage, CI/CD",
+        "构建脚本、交叉编译、覆盖率与 CI/CD",
         "practices",
     ),
 ];
@@ -119,28 +133,51 @@ fn build_to(dir_name: &str) {
     println!("Building unified site into {dir_name}/\n");
 
     let mut ok = 0u32;
-    for &(slug, _, _, _) in BOOKS {
+    let mut zh_ok = 0u32;
+    fs::create_dir_all(out.join("zh")).expect("failed to create zh output dir");
+
+    for &(slug, title_en, title_zh, _, _, _) in BOOKS {
         let book_dir = root.join(slug);
         if !book_dir.is_dir() {
             eprintln!("  ✗ {slug}/ not found, skipping");
             continue;
         }
         let dest = out.join(slug);
-        let status = Command::new("mdbook")
-            .args(["build", "--dest-dir"])
-            .arg(&dest)
-            .current_dir(&book_dir)
-            .status()
-            .expect("failed to run mdbook — is it installed?");
-
-        if status.success() {
+        if run_mdbook(&book_dir, &dest, &[]) {
             println!("  ✓ {slug}");
             ok += 1;
         } else {
             eprintln!("  ✗ {slug} FAILED");
         }
+
+        let zh_src = book_dir.join("zh");
+        if !zh_src.is_dir() {
+            eprintln!("  ✗ {slug}/zh not found, skipping bilingual build");
+            continue;
+        }
+
+        let zh_dest = out.join("zh").join(slug);
+        let zh_env = vec![
+            ("MDBOOK_BOOK__SRC", "zh".to_string()),
+            (
+                "MDBOOK_BOOK__TITLE",
+                format!("{title_en} | {title_zh}"),
+            ),
+            ("MDBOOK_BOOK__LANGUAGE", "zh-CN".to_string()),
+        ];
+
+        if run_mdbook(&book_dir, &zh_dest, &zh_env) {
+            println!("  ✓ zh/{slug}");
+            zh_ok += 1;
+        } else {
+            eprintln!("  ✗ zh/{slug} FAILED");
+        }
     }
-    println!("\n  {ok}/{} books built", BOOKS.len());
+    println!(
+        "\n  {ok}/{} English books built\n  {zh_ok}/{} bilingual books built",
+        BOOKS.len(),
+        BOOKS.len()
+    );
 
     write_landing_page(&out);
     println!("\nDone! Output in {dir_name}/");
@@ -157,16 +194,51 @@ fn category_label(cat: &str) -> &str {
     }
 }
 
+fn category_label_zh(cat: &str) -> &str {
+    match cat {
+        "bridge" => "跨语言入门",
+        "deep-dive" => "专题深入",
+        "advanced" => "高级主题",
+        "expert" => "专家主题",
+        "practices" => "工程实践",
+        _ => cat,
+    }
+}
+
+fn run_mdbook(book_dir: &Path, dest: &Path, envs: &[(&str, String)]) -> bool {
+    let mut command = Command::new("mdbook");
+    command
+        .args(["build", "--dest-dir"])
+        .arg(dest)
+        .current_dir(book_dir);
+
+    for (key, value) in envs {
+        command.env(key, value);
+    }
+
+    command
+        .status()
+        .expect("failed to run mdbook — is it installed?")
+        .success()
+}
+
 fn write_landing_page(site: &Path) {
     let cards: String = BOOKS
         .iter()
-        .map(|&(slug, title, desc, cat)| {
-            let label = category_label(cat);
+        .map(|&(slug, title_en, title_zh, desc_en, desc_zh, cat)| {
+            let label_en = category_label(cat);
+            let label_zh = category_label_zh(cat);
             format!(
-                r#"    <a class="card cat-{cat}" href="{slug}/">
-      <h2>{title} <span class="label">{label}</span></h2>
-      <p>{desc}</p>
-    </a>"#
+                r#"    <article class="card cat-{cat}">
+      <h2>{title_en}<span class="label">{label_en}</span></h2>
+      <p class="title-zh">{title_zh}<span class="label label-zh">{label_zh}</span></p>
+      <p>{desc_en}</p>
+      <p class="desc-zh">{desc_zh}</p>
+      <div class="card-links">
+        <a class="card-link" href="{slug}/">English</a>
+        <a class="card-link bilingual" href="zh/{slug}/">中英对照</a>
+      </div>
+    </article>"#
             )
         })
         .collect::<Vec<_>>()
@@ -205,7 +277,28 @@ fn write_landing_page(site: &Path) {
     }}
     h1 {{ font-size: 2.5rem; margin-bottom: 0.5rem; }}
     h1 span {{ color: var(--accent); }}
-    .subtitle {{ color: var(--muted); font-size: 1.1rem; margin-bottom: 1.2rem; }}
+    .subtitle {{ color: var(--muted); font-size: 1.1rem; margin-bottom: 1.2rem; text-align: center; line-height: 1.55; }}
+    .hero-links {{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 2.2rem;
+    }}
+    .hero-link {{
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 0.55rem 0.95rem;
+      font-size: 0.9rem;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }}
+    .hero-link:hover {{
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.26);
+      transform: translateY(-1px);
+    }}
 
     /* Legend */
     .legend {{
@@ -230,7 +323,6 @@ fn write_landing_page(site: &Path) {
       background: var(--card-bg);
       border-radius: 12px;
       padding: 1.5rem 1.5rem 1.5rem 1.25rem;
-      text-decoration: none;
       color: var(--text);
       transition: transform 0.15s, box-shadow 0.15s;
       border: 1px solid rgba(255,255,255,0.05);
@@ -242,8 +334,22 @@ fn write_landing_page(site: &Path) {
       border-color: rgba(255,255,255,0.08);
       border-left-color: var(--stripe);
     }}
-    .card h2 {{ font-size: 1.2rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }}
+    .card h2 {{ font-size: 1.2rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }}
     .card p  {{ color: var(--muted); font-size: 0.9rem; line-height: 1.4; }}
+    .title-zh {{ color: var(--text); font-size: 0.98rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }}
+    .desc-zh {{ margin-top: 0.3rem; margin-bottom: 1rem; }}
+    .card-links {{ display: flex; gap: 0.75rem; margin-top: 1rem; }}
+    .card-link {{
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.84rem;
+      transition: background 0.15s, border-color 0.15s;
+    }}
+    .card-link:hover {{ background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.22); }}
+    .card-link.bilingual {{ background: color-mix(in srgb, var(--stripe) 18%, transparent); border-color: color-mix(in srgb, var(--stripe) 55%, rgba(255,255,255,0.2)); }}
 
     /* Category colours */
     .cat-bridge     {{ --stripe: var(--clr-bridge); }}
@@ -259,26 +365,39 @@ fn write_landing_page(site: &Path) {
       border-radius: 4px; white-space: nowrap; flex-shrink: 0;
       color: var(--bg); background: var(--stripe);
     }}
+    .label-zh {{
+      text-transform: none;
+      letter-spacing: 0.04em;
+    }}
 
-    footer {{ margin-top: 3rem; color: var(--muted); font-size: 0.85rem; }}
+    footer {{ margin-top: 3rem; color: var(--muted); font-size: 0.85rem; text-align: center; line-height: 1.7; }}
+    footer a {{ color: var(--accent); }}
   </style>
 </head>
 <body>
   <h1>🦀 <span>Rust</span> Training Books</h1>
-  <p class="subtitle">Pick the guide that matches your background</p>
+  <p class="subtitle">Pick the guide that matches your background<br>选择符合当前背景的教程</p>
+  <div class="hero-links">
+    <a class="hero-link" href="https://github.com/zcg/RustTraining">Fork Repository</a>
+    <a class="hero-link" href="https://github.com/zcg/RustTraining">GitHub 预览与源码</a>
+  </div>
 
   <div class="legend">
-    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-bridge)"></span> Bridge &mdash; learn Rust from another language</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-deep-dive)"></span> Deep Dive</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-advanced)"></span> Advanced</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-expert)"></span> Expert</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-practices)"></span> Practices</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-bridge)"></span> Bridge &mdash; learn Rust from another language<br>Bridge：从其他语言迁移到 Rust</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-deep-dive)"></span> Deep Dive<br>专题深入</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-advanced)"></span> Advanced<br>高级主题</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-expert)"></span> Expert<br>专家主题</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--clr-practices)"></span> Practices<br>工程实践</span>
   </div>
 
   <div class="grid">
 {cards}
   </div>
-  <footer>Built with <a href="https://rust-lang.github.io/mdBook/" style="color:var(--accent)">mdBook</a></footer>
+  <footer>
+    双语翻译与对照排版由 GPT-5.4 提供，感谢 <a href="https://openai.com/">OpenAI</a><br>
+    项目主页与后续更新以 <a href="https://github.com/zcg/RustTraining">https://github.com/zcg/RustTraining</a> 为准<br>
+    Built with <a href="https://rust-lang.github.io/mdBook/">mdBook</a> · 首页提供英文原版与中英对照入口
+  </footer>
 </body>
 </html>
 "##

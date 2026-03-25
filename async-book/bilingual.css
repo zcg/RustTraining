@@ -1,0 +1,111 @@
+main .zh-inline {
+  display: block;
+  margin-top: 0.38rem;
+  padding-left: 0.95rem;
+  border-left: 3px solid rgba(127, 127, 127, 0.32);
+  color: var(--fg);
+  opacity: 0.88;
+  font-size: 0.95em;
+  line-height: 1.8;
+}
+
+main h1 .zh-inline,
+main h2 .zh-inline,
+main h3 .zh-inline,
+main h4 .zh-inline {
+  margin-top: 0.5rem;
+  padding-left: 0;
+  border-left: 0;
+  opacity: 0.76;
+  font-size: 0.72em;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+}
+
+main li .zh-inline {
+  margin-top: 0.18rem;
+  padding-left: 0.7rem;
+}
+
+main blockquote .zh-inline {
+  border-left-color: rgba(127, 127, 127, 0.24);
+}
+
+main td .zh-inline,
+main th .zh-inline {
+  margin-top: 0.22rem;
+  padding-left: 0.55rem;
+  font-size: 0.92em;
+}
+
+.sidebar .chapter .chapter-link-wrapper > a,
+.sidebar-scrollbox .chapter .chapter-link-wrapper > a {
+  line-height: 1.35;
+}
+
+.sidebar .chapter .chapter-link-wrapper > a .zh-inline,
+.sidebar-scrollbox .chapter .chapter-link-wrapper > a .zh-inline {
+  display: block;
+  margin-top: 0.22rem;
+  padding-left: 0;
+  border-left: 0;
+  opacity: 0.72;
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+
+.sidebar .chapter li.chapter-item,
+.sidebar-scrollbox .chapter li.chapter-item {
+  margin-bottom: 0.32rem;
+}
+
+.sidebar .chapter .chapter-link-wrapper > a .bi-en,
+.sidebar-scrollbox .chapter .chapter-link-wrapper > a .bi-en,
+.sidebar .chapter .part-title .bi-en,
+.sidebar-scrollbox .chapter .part-title .bi-en,
+.menu-title .bi-en {
+  display: block;
+}
+
+.sidebar .chapter .chapter-link-wrapper > a .bi-en strong,
+.sidebar-scrollbox .chapter .chapter-link-wrapper > a .bi-en strong {
+  margin-right: 0.38rem;
+}
+
+.sidebar .chapter .chapter-link-wrapper > a .bi-zh,
+.sidebar-scrollbox .chapter .chapter-link-wrapper > a .bi-zh,
+.sidebar .chapter .part-title .bi-zh,
+.sidebar-scrollbox .chapter .part-title .bi-zh,
+.menu-title .bi-zh {
+  display: block;
+  margin-top: 0.2rem;
+  opacity: 0.72;
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+
+.sidebar .chapter .chapter-link-wrapper > a .bi-zh,
+.sidebar-scrollbox .chapter .chapter-link-wrapper > a .bi-zh {
+  padding-left: 1.45rem;
+}
+
+.sidebar .chapter .chapter-link-wrapper > a.no-number .bi-zh,
+.sidebar-scrollbox .chapter .chapter-link-wrapper > a.no-number .bi-zh,
+.sidebar .chapter .part-title .bi-zh,
+.sidebar-scrollbox .chapter .part-title .bi-zh,
+.menu-title .bi-zh {
+  padding-left: 0;
+}
+
+.menu-title {
+  line-height: 1.2;
+}
+
+.menu-title .bi-en {
+  font-size: 0.98em;
+}
+
+.menu-title .bi-zh {
+  font-size: 0.72em;
+  opacity: 0.78;
+}

@@ -1,0 +1,21 @@
+[book]
+title = "Type-Driven Correctness in Rust | Rust 中的类型驱动正确性"
+authors = ["Rust Training Team"]
+language = "zh-CN"
+src = "zh"
+
+[build]
+build-dir = "book"
+
+[output.html]
+git-repository-url = "https://github.com/zcg/RustTraining"
+default-theme = "light"
+preferred-dark-theme = "ayu"
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html.playground]
+editable = true
+line-numbers = true

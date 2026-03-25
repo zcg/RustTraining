@@ -1,0 +1,21 @@
+[book]
+title = "Async Rust: From Futures to Production | Async Rust：从 Future 到生产环境"
+authors = ["Rust Training Team"]
+language = "zh-CN"
+src = "zh"
+
+[build]
+build-dir = "book"
+
+[output.html]
+git-repository-url = "https://github.com/zcg/RustTraining"
+default-theme = "light"
+preferred-dark-theme = "ayu"
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html.playground]
+editable = true
+line-numbers = true

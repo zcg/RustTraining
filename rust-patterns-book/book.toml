@@ -8,10 +8,11 @@ src = "src"
 build-dir = "book"
 
 [output.html]
-git-repository-url = "https://github.com/rust-systems-training/rust-training"
+git-repository-url = "https://github.com/zcg/RustTraining"
 default-theme = "light"
 preferred-dark-theme = "ayu"
-additional-js = ["mermaid.min.js", "mermaid-init.js"]
+additional-js = ["mermaid.min.js", "mermaid-init.js", "bilingual-sidebar.js"]
+additional-css = ["bilingual.css"]
 
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
@@ -19,3 +20,5 @@ command = "mdbook-mermaid"
 [output.html.playground]
 editable = true
 line-numbers = true
+
+
