@@ -393,3 +393,49 @@ This project forces practice with nearly every major Java-to-Rust transition:
 - HTTP contract preservation during migration
 
 Once this capstone feels manageable, migrating a small real Spring Boot service becomes a realistic engineering task instead of an abstract hope.
+
+## Real-World Java-to-Rust References
+
+All links in this section were verified as reachable on March 26, 2026.
+
+- **Datadog: static analyzer migration**  
+  Datadog migrated a production static analyzer from Java to Rust, used feature-parity tests to keep behavior stable, learned enough Rust to map the codebase in about 10 days, completed the overall migration within a month, and reported about 3x faster execution with roughly 10x lower memory use. This is one of the clearest public examples of a disciplined Java-to-Rust migration in a real product. [How we migrated our static analyzer from Java to Rust](https://www.datadoghq.com/blog/engineering/how-we-migrated-our-static-analyzer-from-java-to-rust/)
+
+- **CIMB Niaga: banking microservice migration**  
+  CIMB Niaga migrated a critical internal authentication microservice from Java to Rust with a phased rollout that ran beside the Java service. Their public numbers are unusually concrete: startup time fell from about 31.9 seconds to under 1 second, CPU use dropped from 3 cores to 0.25 cores, and memory use fell from 3.8 GB to 8 MB. They also explicitly describe the learning curve as steep and mention knowledge sharing plus peer mentoring as part of the migration strategy. [Delivering Superior Banking Experiences](https://medium.com/cimb-niaga-engineering/delivering-superior-banking-experiences-bc7ca491eae5)
+
+- **WebGraph and Software Heritage: large-scale graph processing rewrite**  
+  The WebGraph team rewrote a long-standing Java graph-processing framework in Rust because JVM memory and memory-mapping limits became a bottleneck at Software Heritage scale. Their paper reports about 1.4x to 3.18x speedups on representative workloads and explains how Rust's type system and compilation model enabled a cleaner, faster implementation for huge immutable datasets. [WebGraph: The Next Generation (Is in Rust)](https://upsilon.cc/~zack/research/publications/www-2024-webgraph-rs.pdf)
+
+- **Mike Bursell: a Java developer's transition notes**  
+  Mike Bursell describes taking one of his own Java projects and reimplementing it in Rust. The valuable part is the tone: enough of Rust felt familiar to keep going, ownership became understandable with practice, and Cargo plus compiler feedback made the language feel learnable rather than mystical. It is a good first-person account of what the transition feels like after years of Java. [Why I switched from Java to Rust](https://opensource.com/article/20/6/why-rust)
+
+- **Kasun Sameera: practical trade-offs before moving from Java**  
+  Kasun Sameera compares Rust web development with Spring Boot from a Java developer's perspective. The useful takeaway is the trade-off analysis: Rust web frameworks could outperform the same Spring Boot service, but the initial setup effort, library maturity, and convenience story still favored Java for many business applications. That balance is exactly what engineering teams need to judge honestly before migrating. [Before moving to Rust from Java](https://keazkasun.medium.com/before-moving-to-rust-from-java-2b87a70654c0)
+
+## When Java Teams Should Migrate to Rust
+
+Rust becomes a strong choice when most of the following are true:
+
+- predictable latency, low memory usage, or fast startup materially affect user experience or operating cost
+- the service does parser work, protocol handling, security scanning, gateways, agents, stream processing, or other infrastructure-heavy work where control over performance matters
+- the migration target can be isolated behind a clear HTTP, gRPC, queue, or library boundary
+- the team is willing to invest in ownership, borrowing, explicit error handling, and stronger test discipline
+- success can be measured with concrete metrics instead of general excitement about a new language
+
+Java should usually remain the default when most of the following are true:
+
+- the main bottleneck is product complexity or delivery throughput rather than runtime performance
+- Spring Boot, JPA, and the existing JVM platform are still the main reason the team ships quickly
+- the team has no room for training, design reviews, or a slower first migration
+- the proposal is a full rewrite with weak contract tests and no shadow rollout or rollback plan
+
+A practical recommendation for Java teams is to migrate in this order:
+
+1. start with one bounded service, parser, background worker, or performance-critical library
+2. preserve the external contract first and improve internals second
+3. run the Java and Rust implementations side by side during validation
+4. measure latency, memory, startup time, and operational simplicity
+5. expand only after the first migration clearly pays for itself
+
+For most teams, Rust works best as a selective addition to the architecture, not as a blanket replacement for every Java service.
