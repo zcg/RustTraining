@@ -234,7 +234,8 @@ main .bi-image-shell {
   vertical-align: top;
 }
 
-main .bi-image-shell > img {
+main .bi-image-shell > img,
+main .bi-image-shell > svg {
   display: block;
   max-width: 100%;
   height: auto;
@@ -303,6 +304,14 @@ body.bi-image-modal-open {
   align-items: center;
 }
 
+.bi-image-modal-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: calc(92vh - 5.4rem);
+}
+
 .bi-image-modal-content {
   display: block;
   max-width: 100%;
@@ -311,6 +320,13 @@ body.bi-image-modal-open {
   border-radius: 14px;
   box-shadow: 0 22px 52px rgba(0, 0, 0, 0.46);
   background: rgba(15, 23, 42, 0.9);
+}
+
+.bi-image-modal-svg {
+  width: auto;
+  height: auto;
+  padding: 1rem;
+  overflow: visible;
 }
 
 .bi-image-modal-caption {
@@ -361,6 +377,7 @@ body.bi-image-modal-open {
     padding: 3rem 0.6rem 1rem;
   }
 
+  .bi-image-modal-stage,
   .bi-image-modal-content {
     max-height: calc(96vh - 5rem);
   }

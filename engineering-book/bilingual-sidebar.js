@@ -201,18 +201,17 @@
       <div class="bi-image-modal-backdrop" data-close="1"></div>
       <div class="bi-image-modal-dialog" role="dialog" aria-modal="true" aria-label="图片预览">
         <button type="button" class="bi-image-modal-close" aria-label="关闭预览" title="关闭预览">×</button>
-        <img class="bi-image-modal-content" alt="" />
+        <div class="bi-image-modal-stage"></div>
         <div class="bi-image-modal-caption"></div>
       </div>
     `;
 
-    const img = root.querySelector(".bi-image-modal-content");
+    const stage = root.querySelector(".bi-image-modal-stage");
     const caption = root.querySelector(".bi-image-modal-caption");
     const close = () => {
       root.hidden = true;
       document.body.classList.remove("bi-image-modal-open");
-      img.removeAttribute("src");
-      img.alt = "";
+      stage.replaceChildren();
       caption.textContent = "";
     };
 
@@ -229,46 +228,92 @@
     });
 
     document.body.appendChild(root);
-    imageModal = { root, img, caption, close };
+    imageModal = { root, stage, caption, close };
     return imageModal;
   }
 
-  function openImageModal(image) {
-    const src = image.currentSrc || image.getAttribute("src");
-    if (!src) return;
+  function buildZoomClone(node) {
+    if (node.tagName === "IMG") {
+      const src = node.currentSrc || node.getAttribute("src");
+      if (!src) return null;
+      const clone = document.createElement("img");
+      clone.className = "bi-image-modal-content";
+      clone.src = src;
+      clone.alt = node.alt || "";
+      return clone;
+    }
+
+    if (node.tagName === "SVG") {
+      const clone = node.cloneNode(true);
+      clone.classList.add("bi-image-modal-content", "bi-image-modal-svg");
+      clone.removeAttribute("style");
+      clone.removeAttribute("height");
+      const width = node.getAttribute("width");
+      if (width && !clone.getAttribute("viewBox")) {
+        const height = node.getAttribute("height") || width;
+        clone.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      }
+      return clone;
+    }
+
+    return null;
+  }
+
+  function openImageModal(node) {
+    const clone = buildZoomClone(node);
+    if (!clone) return;
 
     const modal = ensureImageModal();
-    modal.img.src = src;
-    modal.img.alt = image.alt || "";
-    modal.caption.textContent = image.alt || image.getAttribute("title") || "";
+    modal.stage.replaceChildren(clone);
+    modal.caption.textContent = node.getAttribute("aria-label")
+      || node.getAttribute("title")
+      || node.getAttribute("alt")
+      || "";
     modal.root.hidden = false;
     document.body.classList.add("bi-image-modal-open");
   }
 
+  function shouldDecorateSvg(svg) {
+    if (svg.closest(".bi-image-shell, .bi-image-modal, .header, .sidebar, a, button")) {
+      return false;
+    }
+    const rect = svg.getBoundingClientRect();
+    return rect.width >= 140 || rect.height >= 140;
+  }
+
+  function attachZoomShell(node) {
+    if (node.dataset.biZoomReady === "1") return;
+    if (node.closest(".bi-image-shell, .bi-image-modal")) return;
+
+    const wrapper = document.createElement("span");
+    wrapper.className = "bi-image-shell";
+    node.parentNode.insertBefore(wrapper, node);
+    wrapper.appendChild(node);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "bi-image-zoom-button";
+    button.setAttribute("aria-label", "放大查看图片");
+    button.setAttribute("title", "放大查看");
+    button.textContent = "⤢";
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openImageModal(node);
+    });
+
+    wrapper.appendChild(button);
+    node.dataset.biZoomReady = "1";
+  }
+
   function decorateImages() {
     document.querySelectorAll("main img").forEach((image) => {
-      if (image.dataset.biZoomReady === "1") return;
-      if (image.closest(".bi-image-shell, .bi-image-modal")) return;
+      attachZoomShell(image);
+    });
 
-      const wrapper = document.createElement("span");
-      wrapper.className = "bi-image-shell";
-      image.parentNode.insertBefore(wrapper, image);
-      wrapper.appendChild(image);
-
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "bi-image-zoom-button";
-      button.setAttribute("aria-label", "放大查看图片");
-      button.setAttribute("title", "放大查看");
-      button.textContent = "⤢";
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        openImageModal(image);
-      });
-
-      wrapper.appendChild(button);
-      image.dataset.biZoomReady = "1";
+    document.querySelectorAll("main svg").forEach((svg) => {
+      if (!shouldDecorateSvg(svg)) return;
+      attachZoomShell(svg);
     });
   }
 
