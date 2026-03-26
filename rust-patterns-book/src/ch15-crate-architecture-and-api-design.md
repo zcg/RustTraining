@@ -229,6 +229,7 @@ Do you need ownership of the data inside the function?
 pub struct DiagRunner {
     name: String,
     config_path: PathBuf,
+    results: HashMap<String, TestResult>,
 }
 
 impl DiagRunner {

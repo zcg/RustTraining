@@ -38,7 +38,7 @@ Every pattern here follows one principle: **push invariants from runtime checks 
 
 | Ch | Title | Difficulty | Key Idea |
 |----|-------|:----------:|----------|
-| 1 | The Philosophy — Why Types Beat Tests | 🟢 | Three levels of correctness; Curry-Howard intuition |
+| 1 | The Philosophy — Why Types Beat Tests | 🟢 | Three levels of correctness; types as compiler-checked guarantees |
 | 2 | Typed Command Interfaces | 🟡 | Associated types bind request → response |
 | 3 | Single-Use Types | 🟡 | Move semantics as linear types for crypto |
 | 4 | Capability Tokens | 🟡 | Zero-sized proof-of-authority tokens |

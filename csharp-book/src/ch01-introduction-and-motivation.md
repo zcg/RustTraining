@@ -64,16 +64,16 @@ impl DataProcessor {
 ### Memory Safety Without Runtime Checks
 ```csharp
 // C# - Runtime safety with overhead
-public class UnsafeOperations
+public class RuntimeCheckedOperations
 {
-    public string ProcessArray(int[] array)
+    public string? ProcessArray(int[] array)
     {
-        // Runtime bounds checking
+        // Runtime bounds checking on every access
         if (array.Length > 0)
         {
-            return array[0].ToString(); // NullReferenceException possible
+            return array[0].ToString(); // Safe — int is a value type, never null
         }
-        return null; // Null propagation
+        return null; // Nullable return (string? with C# 8+ nullable reference types)
     }
     
     public void ProcessConcurrently()
@@ -221,8 +221,9 @@ Rust's type system catches entire categories of logic bugs at compile time that 
 
 #### ADTs vs Sealed-Class Workarounds
 ```csharp
-// C# — Discriminated unions require sealed-class boilerplate
-// and the compiler STILL doesn't enforce exhaustive matching.
+// C# — Discriminated unions require sealed-class boilerplate.
+// The compiler warns about missing cases (CS8524) ONLY when there's no _ catch-all.
+// In practice, most C# code uses _ as a default, which silences the warning.
 public abstract record Shape;
 public sealed record Circle(double Radius)   : Shape;
 public sealed record Rectangle(double W, double H) : Shape;
@@ -232,11 +233,11 @@ public static double Area(Shape shape) => shape switch
 {
     Circle c    => Math.PI * c.Radius * c.Radius,
     Rectangle r => r.W * r.H,
-    // Forgot Triangle? Compiles fine. Throws at runtime.
+    // Forgot Triangle? The _ catch-all silences any compiler warning.
     _           => throw new ArgumentException("Unknown shape")
 };
-// Add a new variant six months later — no compiler warning
-// tells you about the 47 switch expressions you need to update.
+// Add a new variant six months later — the _ pattern hides the missing case.
+// No compiler warning tells you about the 47 switch expressions you need to update.
 ```
 
 ```rust

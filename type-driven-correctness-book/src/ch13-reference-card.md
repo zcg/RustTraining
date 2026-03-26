@@ -1,6 +1,6 @@
 # Reference Card
 
-> **Quick-reference for all 14+ correct-by-construction patterns** with selection flowchart, pattern catalogue, composition rules, crate mapping, and Curry-Howard cheat sheet.
+> **Quick-reference for all 14+ correct-by-construction patterns** with selection flowchart, pattern catalogue, composition rules, crate mapping, and types-as-guarantees cheat sheet.
 >
 > **Cross-references:** Every chapter — this is the lookup table for the entire book.
 
@@ -103,17 +103,17 @@ Error Hierarchy + Validated Boundary = Typed parse errors with exhaustive handli
 | `diag_framework` | Typestate builder (DerBuilder), session types (orchestrator↔worker) |
 | `topology_lib` | Const-generic register banks, safe MMIO wrappers |
 
-### Curry-Howard Cheat Sheet
+### Types as Guarantees — Quick Mapping
 
-| Logic Concept | Rust Equivalent | Example |
-|--------------|----------------|---------|
-| Proposition | Type | `AdminToken` |
-| Proof | Value of that type | `let tok = authenticate()?;` |
-| Implication (A → B) | Function `fn(A) -> B` | `fn activate(AdminToken) -> Session<Active>` |
-| Conjunction (A ∧ B) | Tuple `(A, B)` or multi-param | `fn op(a: &AdminToken, b: &LinkTrained)` |
-| Disjunction (A ∨ B) | `enum { A(A), B(B) }` or `Result<A, B>` | `Result<Session<Active>, Error>` |
-| True | `()` (unit type) | Always constructible |
-| False | `!` (never type) or `enum Void {}` | Can never be constructed |
+| Guarantee | Rust Equivalent | Example |
+|-----------|----------------|---------|
+| "This proof exists" | A type | `AdminToken` |
+| "I have the proof" | A value of that type | `let tok = authenticate()?;` |
+| "A implies B" | Function `fn(A) -> B` | `fn activate(AdminToken) -> Session<Active>` |
+| "Both A and B" | Tuple `(A, B)` or multi-param | `fn op(a: &AdminToken, b: &LinkTrained)` |
+| "Either A or B" | `enum { A(A), B(B) }` or `Result<A, B>` | `Result<Session<Active>, Error>` |
+| "Always true" | `()` (unit type) | Always constructible |
+| "Impossible" | `!` (never type) or `enum Void {}` | Can never be constructed |
 
 ---
 

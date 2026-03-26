@@ -77,17 +77,6 @@ pub struct Watts(pub f64);
 
 ### Step 2 — The command trait (type-indexed dispatch)
 
-> **Background: GADTs in one paragraph.**
-> In Haskell and similar languages, a *Generalised Algebraic Data Type*
-> ([GADT](https://wiki.haskell.org/GADTs_for_dummies)) lets each constructor of a
-> data type fix the type parameter to something specific.  For example,
-> `ReadTemp :: SensorId -> Cmd Celsius` says "constructing a `ReadTemp` value
-> produces a `Cmd` whose type parameter is always `Celsius`."
-> Rust achieves the same thing differently: an **associated type** on a trait
-> lets each implementing struct pin the response type at compile time.
-> You don't need to know Haskell to use this pattern — the Rust version is
-> self-contained.
-
 The associated type `Response` is the key — it binds each command struct to its
 return type.  Each implementing struct pins `Response` to a specific domain type,
 so `execute()` always returns exactly the right type:
@@ -632,25 +621,6 @@ This pattern applies to **every** hardware management protocol:
 | SMBIOS/DMI | `ReadType17` | `MemoryDeviceInfo` |
 
 The request type **determines** the response type — the compiler enforces it everywhere.
-
-### Aside: How This Compares to Haskell GADTs
-
-If you've seen Haskell GADTs before, here is the direct mapping.  If you haven't,
-feel free to skip this table — the Rust version above is the complete picture.
-
-```text
-Haskell GADT                         Rust Equivalent
-────────────────                     ───────────────────────
-data Cmd a where                     trait IpmiCmd {
-  ReadTemp :: Id -> Cmd Celsius          type Response;
-  ReadFan  :: Id -> Cmd Rpm              ...
-                                     }
-
-eval :: Cmd a -> IO a                fn execute<C: IpmiCmd>(&self, cmd: &C)
-                                         -> io::Result<C::Response>
-```
-
-Both guarantee: **the command determines the return type**.
 
 ## Typed Command Flow
 

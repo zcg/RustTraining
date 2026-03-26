@@ -175,7 +175,7 @@ Every C# developer knows `Console.ReadLine()`. Here's how to handle user input, 
 ```csharp
 // C# — reading user input
 Console.Write("Enter your name: ");
-string name = Console.ReadLine();
+string? name = Console.ReadLine();  // Returns string? in .NET 6+
 Console.WriteLine($"Hello, {name}!");
 
 // Parsing input

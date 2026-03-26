@@ -1,6 +1,6 @@
 # The Philosophy — Why Types Beat Tests 🟢
 
-> **What you'll learn:** The three levels of compile-time correctness (value, state, protocol), the Curry-Howard intuition behind type-level proofs, and when correct-by-construction patterns are — and aren't — worth the investment.
+> **What you'll learn:** The three levels of compile-time correctness (value, state, protocol), how generic function signatures act as compiler-checked guarantees, and when correct-by-construction patterns are — and aren't — worth the investment.
 >
 > **Cross-references:** [ch02](ch02-typed-command-interfaces-request-determi.md) (typed commands), [ch05](ch05-protocol-state-machines-type-state-for-r.md) (type-state), [ch13](ch13-reference-card.md) (reference card)
 
@@ -118,17 +118,17 @@ fn execute<C: IpmiCmd>(cmd: &C, raw: &[u8]) -> io::Result<C::Response> {
 
 **Hardware example:** IPMI, Redfish, NVMe Admin commands — the request type determines the response type.
 
-## The Curry-Howard Connection (Simplified)
+## Types as Compiler-Checked Guarantees
 
-In programming language theory, the **Curry-Howard correspondence** states that types are propositions and programs are proofs. When you write:
+When you write:
 
 ```rust,ignore
 fn execute<C: IpmiCmd>(cmd: &C) -> io::Result<C::Response>
 ```
 
-You're not just writing a function — you're stating a **theorem**: "for any command type `C` that implements `IpmiCmd`, executing it produces exactly `C::Response`." The compiler **proves** this theorem every time it compiles your code. If the proof fails, the program can't exist.
+You're not just writing a function — you're stating a **guarantee**: "for any command type `C` that implements `IpmiCmd`, executing it produces exactly `C::Response`." The compiler **verifies** this guarantee every time it builds your code. If the types don't line up, the program won't compile.
 
-You don't need to understand the theory to use the patterns. But it explains *why* Rust's type system is so powerful — it's not just catching mistakes, it's **proving correctness**.
+This is why Rust's type system is so powerful — it's not just catching mistakes, it's **enforcing correctness at compile time**.
 
 ## When NOT to Use These Patterns
 
@@ -152,7 +152,7 @@ The key question: **"If this bug happens in production, how bad is it?"**
 ## Key Takeaways
 
 1. **Three levels of correctness** — value (newtypes), state (type-state), protocol (associated types) — each eliminates a broader class of bugs.
-2. **Curry-Howard in practice** — every generic function signature is a theorem the compiler proves on each build.
+2. **Types as guarantees** — every generic function signature is a contract the compiler checks on each build.
 3. **The cost question** — "if this bug ships, how bad is it?" determines whether types or tests are the right tool.
 4. **Types complement tests** — they eliminate entire *categories*; tests cover specific *values* and edge cases.
 5. **Know when to stop** — internal helpers and throwaway prototypes rarely need type-level enforcement.
