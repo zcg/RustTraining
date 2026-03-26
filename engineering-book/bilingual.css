@@ -226,3 +226,142 @@ main th .bi-main-en {
   font-size: 0.86em;
   opacity: 0.98;
 }
+
+main .bi-image-shell {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+}
+
+main .bi-image-shell > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+main .bi-image-zoom-button {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  width: 2.15rem;
+  height: 2.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.74);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(6px);
+  transition: transform 0.18s ease, background-color 0.18s ease, opacity 0.18s ease;
+  opacity: 0.94;
+}
+
+main .bi-image-zoom-button:hover,
+main .bi-image-zoom-button:focus-visible {
+  background: rgba(31, 41, 55, 0.92);
+  transform: scale(1.05);
+}
+
+body.bi-image-modal-open {
+  overflow: hidden;
+}
+
+.bi-image-modal[hidden] {
+  display: none;
+}
+
+.bi-image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.bi-image-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+}
+
+.bi-image-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(96vw, 1440px);
+  max-height: 92vh;
+  margin: 4vh auto;
+  padding: 3.2rem 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bi-image-modal-content {
+  display: block;
+  max-width: 100%;
+  max-height: calc(92vh - 5.4rem);
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.46);
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.bi-image-modal-caption {
+  margin-top: 0.9rem;
+  max-width: min(92vw, 980px);
+  color: #e8edf5;
+  text-align: center;
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.bi-image-modal-close {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.3rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.84);
+  color: #fff;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+}
+
+.bi-image-modal-close:hover,
+.bi-image-modal-close:focus-visible {
+  background: rgba(31, 41, 55, 0.96);
+}
+
+@media (max-width: 768px) {
+  main .bi-image-zoom-button {
+    top: 0.45rem;
+    right: 0.45rem;
+    width: 1.95rem;
+    height: 1.95rem;
+    font-size: 0.92rem;
+  }
+
+  .bi-image-modal-dialog {
+    width: 100vw;
+    margin: 2vh auto;
+    padding: 3rem 0.6rem 1rem;
+  }
+
+  .bi-image-modal-content {
+    max-height: calc(96vh - 5rem);
+  }
+}

@@ -1,0 +1,24 @@
+[book]
+title = "Rust for Java Programmers"
+authors = ["Rust Training Team"]
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+git-repository-url = "https://github.com/zcg/RustTraining"
+default-theme = "light"
+preferred-dark-theme = "ayu"
+additional-js = ["mermaid.min.js", "mermaid-init.js", "bilingual-sidebar.js"]
+additional-css = ["bilingual.css"]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html.playground]
+editable = true
+line-numbers = true
+
+

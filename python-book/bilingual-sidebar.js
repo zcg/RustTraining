@@ -1,5 +1,6 @@
 (() => {
   const TOKEN = "§§ZH§§";
+  let imageModal = null;
 
   function splitBilingual(text) {
     const normalized = text.replace(/\s+/g, " ").trim();
@@ -190,6 +191,87 @@
     title.dataset.biReady = "1";
   }
 
+  function ensureImageModal() {
+    if (imageModal) return imageModal;
+
+    const root = document.createElement("div");
+    root.className = "bi-image-modal";
+    root.hidden = true;
+    root.innerHTML = `
+      <div class="bi-image-modal-backdrop" data-close="1"></div>
+      <div class="bi-image-modal-dialog" role="dialog" aria-modal="true" aria-label="图片预览">
+        <button type="button" class="bi-image-modal-close" aria-label="关闭预览" title="关闭预览">×</button>
+        <img class="bi-image-modal-content" alt="" />
+        <div class="bi-image-modal-caption"></div>
+      </div>
+    `;
+
+    const img = root.querySelector(".bi-image-modal-content");
+    const caption = root.querySelector(".bi-image-modal-caption");
+    const close = () => {
+      root.hidden = true;
+      document.body.classList.remove("bi-image-modal-open");
+      img.removeAttribute("src");
+      img.alt = "";
+      caption.textContent = "";
+    };
+
+    root.addEventListener("click", (event) => {
+      if (event.target.closest("[data-close='1'], .bi-image-modal-close")) {
+        close();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !root.hidden) {
+        close();
+      }
+    });
+
+    document.body.appendChild(root);
+    imageModal = { root, img, caption, close };
+    return imageModal;
+  }
+
+  function openImageModal(image) {
+    const src = image.currentSrc || image.getAttribute("src");
+    if (!src) return;
+
+    const modal = ensureImageModal();
+    modal.img.src = src;
+    modal.img.alt = image.alt || "";
+    modal.caption.textContent = image.alt || image.getAttribute("title") || "";
+    modal.root.hidden = false;
+    document.body.classList.add("bi-image-modal-open");
+  }
+
+  function decorateImages() {
+    document.querySelectorAll("main img").forEach((image) => {
+      if (image.dataset.biZoomReady === "1") return;
+      if (image.closest(".bi-image-shell, .bi-image-modal")) return;
+
+      const wrapper = document.createElement("span");
+      wrapper.className = "bi-image-shell";
+      image.parentNode.insertBefore(wrapper, image);
+      wrapper.appendChild(image);
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "bi-image-zoom-button";
+      button.setAttribute("aria-label", "放大查看图片");
+      button.setAttribute("title", "放大查看");
+      button.textContent = "⤢";
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openImageModal(image);
+      });
+
+      wrapper.appendChild(button);
+      image.dataset.biZoomReady = "1";
+    });
+  }
+
   function applyBilingualSidebar() {
     document
       .querySelectorAll(
@@ -204,6 +286,7 @@
     document.querySelectorAll(".zh-inline").forEach(renderInlinePair);
 
     renderMenuTitle();
+    decorateImages();
 
     if (document.title.includes(TOKEN)) {
       document.title = document.title.replace(/\s*§§ZH§§\s*/g, " | ");

@@ -24,6 +24,14 @@ const BOOKS: &[(&str, &str, &str, &str, &str, &str)] = &[
         "bridge",
     ),
     (
+        "java-book",
+        "Rust for Java Programmers",
+        "Rust 面向 Java 程序员",
+        "JVM to native, ownership, errors, async, migration",
+        "从 JVM 到原生，所有权、错误处理、异步与迁移实践",
+        "bridge",
+    ),
+    (
         "python-book",
         "Rust for Python Programmers",
         "Rust 面向 Python 程序员",
