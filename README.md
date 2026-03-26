@@ -12,7 +12,7 @@
 
 # Rust Training Books
 
-Seven training courses covering Rust from different programming backgrounds, plus deep-dives on async, advanced patterns, and engineering practices.
+Eight training courses covering Rust from different programming backgrounds, plus deep-dives on async, advanced patterns, and engineering practices.
 
 This material combines original content with ideas and examples inspired by some of the best resources in the Rust ecosystem. The goal is to present an in-depth, technically accurate curriculum that weaves together knowledge scattered across books, blogs, conference talks, and video series into a cohesive, pedagogically structured experience.
 
@@ -47,13 +47,14 @@ Pick the book that matches your background. Books are grouped by complexity so y
 |------|-------|-------------|
 | [**Rust for C/C++ Programmers**](c-cpp-book/src/SUMMARY.md) | 🟢 Bridge | Move semantics, RAII, FFI, embedded, no_std |
 | [**Rust for C# Programmers**](csharp-book/src/SUMMARY.md) | 🟢 Bridge | Swift / C# / Java → ownership & type system |
+| [**Rust for Java Programmers**](java-book/src/SUMMARY.md) | 🟢 Bridge | JVM services, Spring migration, OOP → ownership |
 | [**Rust for Python Programmers**](python-book/src/SUMMARY.md) | 🟢 Bridge | Dynamic → static typing, GIL-free concurrency |
 | [**Async Rust**](async-book/src/SUMMARY.md) | 🔵 Deep Dive | Tokio, streams, cancellation safety |
 | [**Rust Patterns**](rust-patterns-book/src/SUMMARY.md) | 🟡 Advanced | Pin, allocators, lock-free structures, unsafe |
 | [**Type-Driven Correctness**](type-driven-correctness-book/src/SUMMARY.md) | 🟣 Expert | Type-state, phantom types, capability tokens |
 | [**Rust Engineering Practices**](engineering-book/src/SUMMARY.md) | 🟤 Practices | Build scripts, cross-compilation, CI/CD, Miri |
 
-Each book has 15–16 chapters with Mermaid diagrams, editable Rust playgrounds, exercises, and full-text search.
+Each book has 15–17 chapters with Mermaid diagrams, editable Rust playgrounds, exercises, and full-text search.
 
 > **Tip:** You can read the markdown source directly on GitHub, or browse the rendered site with sidebar navigation and search at the [GitHub Pages site](https://zcg.github.io/RustTraining/).
 >
