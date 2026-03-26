@@ -22,7 +22,7 @@
 Python is famous for developer speed, not CPU efficiency. For CPU-bound tasks, Rust often lands orders of magnitude faster while still keeping relatively high-level syntax.<br><span class="zh-inline">Python 出名的是开发速度，不是 CPU 执行效率。对 CPU 密集任务来说，Rust 往往能快出数量级，同时语法层面又没有低到让人完全失去抽象。</span>
 
 ```python
-# Python — ~45 seconds for 10 million iterations
+# Python — ~2 seconds for 10 million calls
 import time
 
 def fibonacci(n: int) -> int:
@@ -34,13 +34,13 @@ def fibonacci(n: int) -> int:
     return b
 
 start = time.perf_counter()
-results = [fibonacci(i) for i in range(10_000_000)]
+results = [fibonacci(n % 30) for n in range(10_000_000)]
 elapsed = time.perf_counter() - start
-print(f"Elapsed: {elapsed:.2f}s")
+print(f"Elapsed: {elapsed:.2f}s")  # ~2s on typical hardware
 ```
 
 ```rust
-// Rust — ~0.3 seconds for the same 10 million iterations
+// Rust — ~0.07 seconds for the same 10 million calls
 use std::time::Instant;
 
 fn fibonacci(n: u64) -> u64 {
@@ -50,7 +50,7 @@ fn fibonacci(n: u64) -> u64 {
     let (mut a, mut b) = (0u64, 1u64);
     for _ in 2..=n {
         let temp = b;
-        b = a.wrapping_add(b);
+        b = a + b;
         a = temp;
     }
     b
@@ -58,10 +58,12 @@ fn fibonacci(n: u64) -> u64 {
 
 fn main() {
     let start = Instant::now();
-    let results: Vec<u64> = (0..10_000_000).map(fibonacci).collect();
-    println!("Elapsed: {:.2?}", start.elapsed());
+    let results: Vec<u64> = (0..10_000_000).map(|n| fibonacci(n % 30)).collect();
+    println!("Elapsed: {:.2?}", start.elapsed());  // ~0.07s
 }
 ```
+
+> **Note:** Rust should be run in release mode (`cargo run --release`) for a fair performance comparison.<br><span class="zh-inline">**说明：** 做这种性能对比时，Rust 一定要用 `cargo run --release` 跑，否则数字会被 debug 构建拖得很难看。</span>
 
 > **Why the difference?** Python dispatches arithmetic through runtime object machinery, dictionary lookups, heap-allocated integers, and dynamic type checks. Rust compiles the same logic down to simple machine instructions.<br><span class="zh-inline">**为什么差距会这么大？** 因为 Python 的算术操作要经过运行时对象系统、字典查找、堆对象拆装以及动态类型检查；Rust 则会把同样的逻辑直接编译成很朴素的机器指令。</span>
 

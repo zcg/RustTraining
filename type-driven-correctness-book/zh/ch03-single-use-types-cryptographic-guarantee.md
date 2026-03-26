@@ -60,6 +60,7 @@ Attempting to reuse it:<br><span class="zh-inline">如果还想再用一次：</
 ```rust,ignore
 fn bad_encrypt(key: &SealingKey, data1: &mut Vec<u8>, data2: &mut Vec<u8>) {
     let nonce = Nonce::try_assume_unique_for_key(&[0u8; 12]).unwrap();
+    // .unwrap() is safe — a 12-byte array is always a valid nonce.
     seal_in_place(key, nonce, data1).unwrap();  // ✅ nonce moved here
     // seal_in_place(key, nonce, data2).unwrap();
     //                    ^^^^^ ERROR: use of moved value ❌

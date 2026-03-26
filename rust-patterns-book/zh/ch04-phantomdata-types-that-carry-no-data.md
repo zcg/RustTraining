@@ -288,7 +288,7 @@ struct SessionToken<'a> {
     id: u64,
     _brand: PhantomData<&'a ()>,  // ✅ Covariant — callers can shorten 'a
     // _brand: PhantomData<fn(&'a ())>,  // ❌ Contravariant — breaks ergonomics
-    // _brand: PhantomData<&'a mut ()>;  // ❌ Invariant over () — overly restrictive
+    // _brand: PhantomData<&'a mut ()>;  // Still covariant over 'a (invariant over T, but T is fixed as ())
 }
 
 fn use_token(token: &SessionToken<'_>) {

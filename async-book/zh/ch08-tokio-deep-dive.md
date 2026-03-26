@@ -183,6 +183,8 @@ tx.send(42).unwrap();
 println!("Latest: {}", *rx.borrow());
 ```
 
+> **Note:** `.unwrap()` is used for brevity throughout these channel examples. In production, handle send/receive errors gracefully — a failed `.send()` means the receiver was dropped, and a failed `.recv()` means the channel is closed.<br><span class="zh-inline">**说明：** 这些 channel 示例里用了 `.unwrap()`，只是为了把重点放在机制本身。生产代码里要认真处理收发错误：`.send()` 失败通常表示接收端已经被丢弃，`.recv()` 失败则表示 channel 已经关闭。</span>
+
 ```mermaid
 graph LR
     subgraph "Channel Types<br/>Channel 类型"

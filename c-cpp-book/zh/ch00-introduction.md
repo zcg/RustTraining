@@ -60,12 +60,11 @@ This material works both as an instructor-led course and for self-study. If you'
 - [How does Rust address these issues?](ch01-introduction-and-motivation.md#how-does-rust-address-these-issues)<br><span class="zh-inline">Rust 如何解决这些问题</span>
 - [Other Rust USPs and features](ch01-introduction-and-motivation.md#other-rust-usps-and-features)<br><span class="zh-inline">Rust 其他独特卖点与特性</span>
 - [Quick Reference: Rust vs C/C++](ch01-introduction-and-motivation.md#quick-reference-rust-vs-cc)<br><span class="zh-inline">速查：Rust 与 C/C++ 对比</span>
-- [Why C Developers Need Rust](ch01-1-why-c-cpp-developers-need-rust.md#the-problems-shared-by-c-and-c)<br><span class="zh-inline">为什么 C 开发者需要 Rust</span>
-  - [Common C vulnerabilities](ch01-1-why-c-cpp-developers-need-rust.md#the-problems-shared-by-c-and-c)<br><span class="zh-inline">C 语言中的常见漏洞</span>
-  - [Illustration of C vulnerabilities](ch01-1-why-c-cpp-developers-need-rust.md#the-visualization-shared-problems)<br><span class="zh-inline">C 语言漏洞示例</span>
-- [Why C++ Developers Need Rust](ch01-1-why-c-cpp-developers-need-rust.md#c-adds-more-problems-on-top)<br><span class="zh-inline">为什么 C++ 开发者需要 Rust</span>
-  - [C++ challenges that Rust addresses](ch01-1-why-c-cpp-developers-need-rust.md#c-adds-more-problems-on-top)<br><span class="zh-inline">Rust 针对的 C++ 难题</span>
-  - [C++ memory safety issues (even with modern C++)](ch01-1-why-c-cpp-developers-need-rust.md#dangling-references-and-lambda-captures)<br><span class="zh-inline">即便是现代 C++ 也仍然存在的内存安全问题</span>
+- [Why C/C++ Developers Need Rust](ch01-1-why-c-cpp-developers-need-rust.md)<br><span class="zh-inline">为什么 C/C++ 开发者需要 Rust</span>
+  - [What Rust Eliminates — The Complete List](ch01-1-why-c-cpp-developers-need-rust.md#what-rust-eliminates--the-complete-list)<br><span class="zh-inline">Rust 到底消灭了什么：完整清单</span>
+  - [The Problems Shared by C and C++](ch01-1-why-c-cpp-developers-need-rust.md#the-problems-shared-by-c-and-c)<br><span class="zh-inline">C 和 C++ 共同存在的问题</span>
+  - [C++ Adds More Problems on Top](ch01-1-why-c-cpp-developers-need-rust.md#c-adds-more-problems-on-top)<br><span class="zh-inline">C++ 在此基础上又额外引入的问题</span>
+  - [How Rust Addresses All of This](ch01-1-why-c-cpp-developers-need-rust.md#how-rust-addresses-all-of-this)<br><span class="zh-inline">Rust 如何系统性解决这些问题</span>
 
 ### 2. Getting Started<br><span class="zh-inline">2. 快速开始</span>
 - [Enough talk already: Show me some code](ch02-getting-started.md#enough-talk-already-show-me-some-code)<br><span class="zh-inline">少说废话，先上代码</span>

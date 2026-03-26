@@ -75,17 +75,6 @@ pub struct Watts(pub f64);
 
 ### Step 2 — The command trait (type-indexed dispatch)<br><span class="zh-inline">第 2 步：命令 trait（按类型索引的分发）</span>
 
-> **Background: GADTs in one paragraph.**
-> In Haskell and similar languages, a *Generalised Algebraic Data Type*
-> ([GADT](https://wiki.haskell.org/GADTs_for_dummies)) lets each constructor of a
-> data type fix the type parameter to something specific.  For example,
-> `ReadTemp :: SensorId -> Cmd Celsius` says "constructing a `ReadTemp` value
-> produces a `Cmd` whose type parameter is always `Celsius`."
-> Rust achieves the same thing differently: an **associated type** on a trait
-> lets each implementing struct pin the response type at compile time.
-> You don't need to know Haskell to use this pattern — the Rust version is
-> self-contained.<br><span class="zh-inline">**背景补充：用一段话讲清 GADT。** 在 Haskell 这类语言里，*广义代数数据类型*（[GADT](https://wiki.haskell.org/GADTs_for_dummies)）允许数据类型的不同构造器把类型参数固定成特定类型。比如 `ReadTemp :: SensorId -> Cmd Celsius` 的意思就是：构造一个 `ReadTemp`，得到的 `Cmd` 类型参数永远是 `Celsius`。Rust 没有直接的 GADT 语法，但可以通过 trait 上的**关联类型**达到同样效果，让每个实现结构体在编译期把响应类型钉死。不会 Haskell 也没关系，Rust 版本本身已经够完整了。</span>
-
 The associated type `Response` is the key — it binds each command struct to its return type. Each implementing struct pins `Response` to a specific domain type, so `execute()` always returns exactly the right type:<br><span class="zh-inline">这里的关键就是关联类型 `Response`。它把每个命令结构体和它的返回类型绑死在一起。每个实现都会把 `Response` 指向某个具体领域类型，所以 `execute()` 永远返回正确的那个类型。</span>
 
 ```rust,ignore
@@ -625,24 +614,6 @@ This pattern applies to **every** hardware management protocol:<br><span class="
 | SMBIOS/DMI | `ReadType17` | `MemoryDeviceInfo` |
 
 The request type **determines** the response type — the compiler enforces it everywhere.<br><span class="zh-inline">请求类型会**决定**响应类型，这条关系由编译器在所有地方统一强制执行。</span>
-
-### Aside: How This Compares to Haskell GADTs<br><span class="zh-inline">补充：它和 Haskell GADT 的对应关系</span>
-
-If you've seen Haskell GADTs before, here is the direct mapping. If you haven't, feel free to skip this table — the Rust version above is the complete picture.<br><span class="zh-inline">如果见过 Haskell 的 GADT，这里可以直接对照；如果没见过，跳过也完全没问题，因为上面的 Rust 版本已经把核心思路讲全了。</span>
-
-```text
-Haskell GADT                         Rust Equivalent
-────────────────                     ───────────────────────
-data Cmd a where                     trait IpmiCmd {
-  ReadTemp :: Id -> Cmd Celsius          type Response;
-  ReadFan  :: Id -> Cmd Rpm              ...
-                                     }
-
-eval :: Cmd a -> IO a                fn execute<C: IpmiCmd>(&self, cmd: &C)
-                                         -> io::Result<C::Response>
-```
-
-Both guarantee: **the command determines the return type**.<br><span class="zh-inline">两边保证的其实是同一件事：**命令决定返回类型**。</span>
 
 ## Typed Command Flow<br><span class="zh-inline">类型化命令的流转过程</span>
 

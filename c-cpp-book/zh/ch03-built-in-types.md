@@ -34,7 +34,7 @@ fn main() {
 ```rust
 fn foo(x : u8) -> u32
 {
-    return x * x;
+    return x as u32 * x as u32;
 }
 ```
 

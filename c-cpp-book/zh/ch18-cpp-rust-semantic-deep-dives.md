@@ -402,6 +402,7 @@ use std::ptr;
 const GPIO_REG: *mut u32 = 0x4002_0000 as *mut u32;
 
 unsafe {
+    // SAFETY: GPIO_REG is a valid memory-mapped I/O address.
     ptr::write_volatile(GPIO_REG, 0x01);   // Write not optimized away
     let val = ptr::read_volatile(GPIO_REG); // Read not optimized away
 }

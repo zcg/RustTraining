@@ -191,6 +191,15 @@ cargo install cargo-machete
 cargo machete
 ```
 
+**Alternative: `cargo-shear`** — sweet spot between `cargo-udeps` and `cargo-machete`:<br><span class="zh-inline">**另一种选择：`cargo-shear`**，速度和准确率通常处在 `cargo-udeps` 与 `cargo-machete` 中间，挺适合日常巡检。</span>
+
+```bash
+cargo install cargo-shear
+cargo shear --fix
+# Slower than cargo-machete but much faster than cargo-udeps
+# Much less false positives than cargo-machete
+```
+
 ### Size Optimization Decision Tree<br><span class="zh-inline">体积优化决策树</span>
 
 ```mermaid
@@ -267,7 +276,7 @@ cargo bloat --release --crates
 - `lto = true`、`codegen-units = 1`、`strip = true`、`panic = "abort"` 是一套很常见的生产发布配置。<br><span class="zh-inline">这是一套非常常见的生产级发布组合。</span>
 - Thin LTO 通常能拿到大部分优化收益，但编译成本比 Fat LTO 小得多。<br><span class="zh-inline">对大多数项目来说，它往往是更平衡的选择。</span>
 - `cargo-bloat --crates` 能把“到底谁在吃空间”这件事讲明白。<br><span class="zh-inline">别靠猜，直接测。</span>
-- `cargo-udeps` 和 `cargo-machete` 可以清理掉那些白白拖慢构建、增大体积的死依赖。<br><span class="zh-inline">依赖瘦身往往同时改善编译时间、二进制大小和供应链质量。</span>
+- `cargo-udeps`、`cargo-machete` 和 `cargo-shear` 都可以清理掉那些白白拖慢构建、增大体积的死依赖。<br><span class="zh-inline">依赖瘦身往往同时改善编译时间、二进制大小和供应链质量。</span>
 - 按 crate 单独覆写 profile，可以让热点路径得到强化，又不至于把整个工程的编译速度都拖死。<br><span class="zh-inline">细粒度 profile 是个很值钱的中间路线。</span>
 
 ---

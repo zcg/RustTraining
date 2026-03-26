@@ -45,6 +45,8 @@ fn main() {
 }
 ```
 
+> **Note:** `.unwrap()` on `.send()` is used for brevity. It panics if the receiver has been dropped. Production code should handle `SendError` gracefully.<br><span class="zh-inline">**说明：** 这里对 `.send()` 调用了 `.unwrap()`，只是为了让示例更紧凑。要是接收端已经被丢弃，它会直接 panic；生产代码里应该认真处理 `SendError`。</span>
+
 这个模型非常直观：发送端往里塞消息，接收端顺着 `rx` 把消息一个个取出来。只要还有任何一个 `Sender` 活着，接收端就会认为后面还有可能来消息。<br><span class="zh-inline">所以很多新手程序一挂住，往往不是 channel 坏了，而是某个 `Sender` 忘了 drop，接收端还在傻等。</span>
 
 **Key properties**:<br><span class="zh-inline">**几个关键特性：**</span>
@@ -65,6 +67,8 @@ thread::spawn(move || {
     }
 });
 ```
+
+> **Note:** `.unwrap()` is used for brevity. In production, handle `SendError` (receiver dropped) instead of panicking.<br><span class="zh-inline">**说明：** 这里的 `.unwrap()` 也是为了简洁。生产代码里应该处理 `SendError`，也就是接收端已经不存在的情况，而不是直接 panic。</span>
 
 这里的背压非常朴素也非常实用。缓冲区满了，`send()` 就阻塞，生产者自然慢下来。系统不会假装“一切都能先收下再说”，然后把内存撑爆。<br><span class="zh-inline">很多生产事故说到底就一句话：本该有界的地方写成了无界。</span>
 

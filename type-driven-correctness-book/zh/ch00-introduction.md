@@ -38,7 +38,7 @@ Every pattern here follows one principle: **push invariants from runtime checks 
 
 | Ch | Title | Difficulty | Key Idea |
 |----|-------|:----------:|----------|
-| 1 | The Philosophy — Why Types Beat Tests<br><span class="zh-inline">理念：为什么类型胜过测试</span> | 🟢 | Three levels of correctness; Curry-Howard intuition<br><span class="zh-inline">正确性的三个层级，以及 Curry-Howard 直觉。</span> |
+| 1 | The Philosophy — Why Types Beat Tests<br><span class="zh-inline">理念：为什么类型胜过测试</span> | 🟢 | Three levels of correctness; types as compiler-checked guarantees<br><span class="zh-inline">正确性的三个层级，以及“类型就是编译器检查过的保证”这一视角。</span> |
 | 2 | Typed Command Interfaces<br><span class="zh-inline">类型化命令接口</span> | 🟡 | Associated types bind request → response<br><span class="zh-inline">用关联类型把请求和响应绑定起来。</span> |
 | 3 | Single-Use Types<br><span class="zh-inline">单次使用类型</span> | 🟡 | Move semantics as linear types for crypto<br><span class="zh-inline">把移动语义当作密码学里的线性类型来使用。</span> |
 | 4 | Capability Tokens<br><span class="zh-inline">能力令牌</span> | 🟡 | Zero-sized proof-of-authority tokens<br><span class="zh-inline">零大小的授权证明令牌。</span> |

@@ -201,7 +201,7 @@ Every C# developer knows `Console.ReadLine()`. Here's how Rust handles user inpu
 // C# — reading user input
 // C#：读取用户输入
 Console.Write("Enter your name: ");
-string name = Console.ReadLine();
+string? name = Console.ReadLine();  // Returns string? in .NET 6+
 Console.WriteLine($"Hello, {name}!");
 
 // Parsing input

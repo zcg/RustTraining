@@ -136,6 +136,8 @@ impl DmaBuffer<ToDevice> {
     /// Fill the buffer with data to send to the device.
     pub fn write_data(&mut self, data: &[u8]) {
         assert!(data.len() <= self.len);
+        // SAFETY: ptr is valid for self.len bytes (allocated at construction),
+        // and data.len() <= self.len (asserted above).
         unsafe { std::ptr::copy_nonoverlapping(data.as_ptr(), self.ptr, data.len()) }
     }
 
@@ -148,6 +150,8 @@ impl DmaBuffer<ToDevice> {
 impl DmaBuffer<FromDevice> {
     /// Read data that the device wrote into the buffer.
     pub fn read_data(&self) -> &[u8] {
+        // SAFETY: ptr is valid for self.len bytes, and the device
+        // has finished writing (caller ensures DMA transfer is complete).
         unsafe { std::slice::from_raw_parts(self.ptr, self.len) }
     }
 
@@ -329,6 +333,7 @@ pub struct MemRegion<Perm> {
 impl<P> MemRegion<P> {
     pub fn read(&self, offset: usize) -> u8 {
         assert!(offset < self.len);
+        // SAFETY: offset < self.len (asserted above), base is valid for len bytes.
         unsafe { *self.base.add(offset) }
     }
 }
@@ -336,6 +341,8 @@ impl<P> MemRegion<P> {
 impl MemRegion<ReadWrite> {
     pub fn write(&mut self, offset: usize, val: u8) {
         assert!(offset < self.len);
+        // SAFETY: offset < self.len (asserted above), base is valid for len bytes,
+        // and &mut self ensures exclusive access.
         unsafe { *self.base.add(offset) = val; }
     }
 }

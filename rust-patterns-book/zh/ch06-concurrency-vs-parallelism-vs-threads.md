@@ -166,6 +166,8 @@ If the problem is “apply the same CPU-heavy work to a big collection,” `rayo
 
 When threads need shared mutable state, Rust provides safe abstractions:<br><span class="zh-inline">当多个线程需要共享可变状态时，Rust 提供了一组相对安全的抽象：</span>
 
+> **Note:** `.unwrap()` on `.lock()`, `.read()`, and `.write()` is used for brevity throughout these examples. These calls fail only if another thread panicked while holding the lock. Production code should decide whether to recover from poisoned locks or propagate the error.<br><span class="zh-inline">**说明：** 这些示例里对 `.lock()`、`.read()`、`.write()` 统一用了 `.unwrap()`，只是为了突出并发模型本身。它们失败通常只有一种情况：别的线程拿着锁时 panic，导致锁进入 poisoned 状态。生产代码里要明确决定是恢复，还是继续把错误往上传。</span>
+
 ```rust
 use std::sync::{Arc, Mutex, RwLock};
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -404,6 +406,8 @@ impl<T: Copy> SeqLock<T> {
         // side is technically unnecessary for a single writer but
         // harmless and consistent.
         self.seq.fetch_add(1, Ordering::AcqRel);
+        // SAFETY: Single-writer invariant upheld by caller (see doc above).
+        // UnsafeCell allows interior mutation; seq counter protects readers.
         unsafe { *self.data.get() = val; }
         // Increment to even (signals write complete).
         // Release: ensure the data write is visible before readers see the even seq.

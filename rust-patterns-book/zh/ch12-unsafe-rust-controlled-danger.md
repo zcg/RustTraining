@@ -11,6 +11,7 @@
 `unsafe` unlocks five operations that the compiler cannot verify:<br><span class="zh-inline">`unsafe` 只会解锁编译器没法自动验证的五类操作：</span>
 
 ```rust
+// SAFETY: each operation is explained inline below.
 unsafe {
     // 1. Dereference a raw pointer
     let ptr: *const i32 = &42;
@@ -268,6 +269,10 @@ impl<const N: usize> FixedArena<N> {
         Some(ptr)
     }
 
+    /// Reset the arena — invalidates all previous allocations.
+    ///
+    /// # Safety
+    /// Caller must ensure no references to arena-allocated data exist.
     pub unsafe fn reset(&self) {
         self.offset.set(0);
     }

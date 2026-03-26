@@ -48,6 +48,12 @@ jobs:
       - name: Check compilation
         run: cargo check --workspace --all-targets --all-features
 
+      - name: Check Cargo.lock
+        run: cargo fetch --locked
+
+      - name: Check doc
+        run: RUSTDOCFLAGS='-Dwarnings' cargo doc --workspace --all-features --no-deps
+
       - name: Clippy lints
         run: cargo clippy --workspace --all-targets --all-features -- -D warnings
 

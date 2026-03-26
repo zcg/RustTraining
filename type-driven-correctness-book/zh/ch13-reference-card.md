@@ -1,6 +1,6 @@
 # Reference Card<br><span class="zh-inline">参考卡片</span>
 
-> **Quick-reference for all 14+ correct-by-construction patterns** with selection flowchart, pattern catalogue, composition rules, crate mapping, and Curry-Howard cheat sheet.<br><span class="zh-inline">**这是一张 14+ 种构造即正确模式的速查卡**，包括选择流程图、模式目录、组合规则、crate 映射，以及 Curry-Howard 速查表。</span>
+> **Quick-reference for all 14+ correct-by-construction patterns** with selection flowchart, pattern catalogue, composition rules, crate mapping, and types-as-guarantees cheat sheet.<br><span class="zh-inline">**这是一张 14+ 种构造即正确模式的速查卡**，包括选择流程图、模式目录、组合规则、crate 映射，以及“类型即保证”速查表。</span>
 >
 > **Cross-references:** Every chapter — this is the lookup table for the entire book.<br><span class="zh-inline">**交叉阅读：** 全书所有章节。这个文件本身就是整本书的索引表和速查表。</span>
 
@@ -127,16 +127,16 @@ RAII（Drop）+ 类型状态 = 带状态约束的清理保证
 | `diag_framework` | Typestate builder (DerBuilder), session types (orchestrator↔worker)<br><span class="zh-inline">Typestate builder（DerBuilder）、会话类型（orchestrator↔worker）</span> |
 | `topology_lib` | Const-generic register banks, safe MMIO wrappers<br><span class="zh-inline">常量泛型寄存器组、安全 MMIO 包装器</span> |
 
-### Curry-Howard Cheat Sheet<br><span class="zh-inline">Curry-Howard 速查表</span>
+### Types as Guarantees — Quick Mapping<br><span class="zh-inline">类型即保证：快速映射</span>
 
-| Logic Concept<br><span class="zh-inline">逻辑概念</span> | Rust Equivalent<br><span class="zh-inline">Rust 对应物</span> | Example<br><span class="zh-inline">例子</span> |
-|--------------|----------------|---------|
-| Proposition<br><span class="zh-inline">命题</span> | Type<br><span class="zh-inline">类型</span> | `AdminToken` |
-| Proof<br><span class="zh-inline">证明</span> | Value of that type<br><span class="zh-inline">该类型的值</span> | `let tok = authenticate()?;` |
-| Implication (A → B)<br><span class="zh-inline">蕴含（A → B）</span> | Function `fn(A) -> B` | `fn activate(AdminToken) -> Session<Active>` |
-| Conjunction (A ∧ B)<br><span class="zh-inline">合取（A ∧ B）</span> | Tuple `(A, B)` or multi-param<br><span class="zh-inline">元组 `(A, B)` 或多参数</span> | `fn op(a: &AdminToken, b: &LinkTrained)` |
-| Disjunction (A ∨ B)<br><span class="zh-inline">析取（A ∨ B）</span> | `enum { A(A), B(B) }` or `Result<A, B>`<br><span class="zh-inline">枚举或 `Result<A, B>`</span> | `Result<Session<Active>, Error>` |
-| True<br><span class="zh-inline">真</span> | `()` (unit type) | Always constructible<br><span class="zh-inline">永远可构造</span> |
-| False<br><span class="zh-inline">假</span> | `!` (never type) or `enum Void {}` | Can never be constructed<br><span class="zh-inline">永远不可构造</span> |
+| Guarantee<br><span class="zh-inline">保证</span> | Rust Equivalent<br><span class="zh-inline">Rust 对应物</span> | Example<br><span class="zh-inline">例子</span> |
+|-----------|----------------|---------|
+| "This proof exists"<br><span class="zh-inline">“这个证明存在”</span> | A type<br><span class="zh-inline">一个类型</span> | `AdminToken` |
+| "I have the proof"<br><span class="zh-inline">“我手里有这个证明”</span> | A value of that type<br><span class="zh-inline">该类型的一个值</span> | `let tok = authenticate()?;` |
+| "A implies B"<br><span class="zh-inline">“A 蕴含 B”</span> | Function `fn(A) -> B` | `fn activate(AdminToken) -> Session<Active>` |
+| "Both A and B"<br><span class="zh-inline">“A 和 B 同时成立”</span> | Tuple `(A, B)` or multi-param<br><span class="zh-inline">元组 `(A, B)` 或多参数</span> | `fn op(a: &AdminToken, b: &LinkTrained)` |
+| "Either A or B"<br><span class="zh-inline">“A 或 B 其一成立”</span> | `enum { A(A), B(B) }` or `Result<A, B>`<br><span class="zh-inline">枚举或 `Result<A, B>`</span> | `Result<Session<Active>, Error>` |
+| "Always true"<br><span class="zh-inline">“永远为真”</span> | `()` (unit type) | Always constructible<br><span class="zh-inline">永远可构造</span> |
+| "Impossible"<br><span class="zh-inline">“根本不可能”</span> | `!` (never type) or `enum Void {}` | Can never be constructed<br><span class="zh-inline">永远不可构造</span> |
 
 ---
