@@ -398,19 +398,19 @@ Once this capstone feels manageable, migrating a small real Spring Boot service 
 
 All links in this section were verified as reachable on March 26, 2026.
 
-- **Datadog: static analyzer migration**  
+- <a href="https://www.datadoghq.com/blog/engineering/how-we-migrated-our-static-analyzer-from-java-to-rust/" target="_blank" rel="noopener noreferrer"><strong>Datadog: static analyzer migration</strong></a>  
   Datadog migrated a production static analyzer from Java to Rust, used feature-parity tests to keep behavior stable, learned enough Rust to map the codebase in about 10 days, completed the overall migration within a month, and reported about 3x faster execution with roughly 10x lower memory use. This is one of the clearest public examples of a disciplined Java-to-Rust migration in a real product. [How we migrated our static analyzer from Java to Rust](https://www.datadoghq.com/blog/engineering/how-we-migrated-our-static-analyzer-from-java-to-rust/)
 
-- **CIMB Niaga: banking microservice migration**  
+- <a href="https://medium.com/cimb-niaga-engineering/delivering-superior-banking-experiences-bc7ca491eae5" target="_blank" rel="noopener noreferrer"><strong>CIMB Niaga: banking microservice migration</strong></a>  
   CIMB Niaga migrated a critical internal authentication microservice from Java to Rust with a phased rollout that ran beside the Java service. Their public numbers are unusually concrete: startup time fell from about 31.9 seconds to under 1 second, CPU use dropped from 3 cores to 0.25 cores, and memory use fell from 3.8 GB to 8 MB. They also explicitly describe the learning curve as steep and mention knowledge sharing plus peer mentoring as part of the migration strategy. [Delivering Superior Banking Experiences](https://medium.com/cimb-niaga-engineering/delivering-superior-banking-experiences-bc7ca491eae5)
 
-- **WebGraph and Software Heritage: large-scale graph processing rewrite**  
+- <a href="https://upsilon.cc/~zack/research/publications/www-2024-webgraph-rs.pdf" target="_blank" rel="noopener noreferrer"><strong>WebGraph and Software Heritage: large-scale graph processing rewrite</strong></a>  
   The WebGraph team rewrote a long-standing Java graph-processing framework in Rust because JVM memory and memory-mapping limits became a bottleneck at Software Heritage scale. Their paper reports about 1.4x to 3.18x speedups on representative workloads and explains how Rust's type system and compilation model enabled a cleaner, faster implementation for huge immutable datasets. [WebGraph: The Next Generation (Is in Rust)](https://upsilon.cc/~zack/research/publications/www-2024-webgraph-rs.pdf)
 
-- **Mike Bursell: a Java developer's transition notes**  
+- <a href="https://opensource.com/article/20/6/why-rust" target="_blank" rel="noopener noreferrer"><strong>Mike Bursell: a Java developer's transition notes</strong></a>  
   Mike Bursell describes taking one of his own Java projects and reimplementing it in Rust. The valuable part is the tone: enough of Rust felt familiar to keep going, ownership became understandable with practice, and Cargo plus compiler feedback made the language feel learnable rather than mystical. It is a good first-person account of what the transition feels like after years of Java. [Why I switched from Java to Rust](https://opensource.com/article/20/6/why-rust)
 
-- **Kasun Sameera: practical trade-offs before moving from Java**  
+- <a href="https://keazkasun.medium.com/before-moving-to-rust-from-java-2b87a70654c0" target="_blank" rel="noopener noreferrer"><strong>Kasun Sameera: practical trade-offs before moving from Java</strong></a>  
   Kasun Sameera compares Rust web development with Spring Boot from a Java developer's perspective. The useful takeaway is the trade-off analysis: Rust web frameworks could outperform the same Spring Boot service, but the initial setup effort, library maturity, and convenience story still favored Java for many business applications. That balance is exactly what engineering teams need to judge honestly before migrating. [Before moving to Rust from Java](https://keazkasun.medium.com/before-moving-to-rust-from-java-2b87a70654c0)
 
 ## When Java Teams Should Migrate to Rust

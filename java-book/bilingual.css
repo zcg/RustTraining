@@ -22,6 +22,11 @@ html.ayu {
   --bilingual-en-sidebar: color-mix(in srgb, var(--fg) 54%, #8f98a8 46%);
 }
 
+html.rust {
+  --bilingual-zh-sidebar: #f6eee6;
+  --bilingual-en-sidebar: color-mix(in srgb, #f6eee6 64%, #d1b39c 36%);
+}
+
 main .zh-inline,
 main .bi-main-zh {
   display: block;

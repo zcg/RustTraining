@@ -152,6 +152,7 @@ fn build_to(dir_name: &str) {
         }
         let dest = out.join(slug);
         if run_mdbook(&book_dir, &dest, &[]) {
+            post_process_book_output(&dest);
             println!("  ✓ {slug}");
             ok += 1;
         } else {
@@ -175,6 +176,7 @@ fn build_to(dir_name: &str) {
         ];
 
         if run_mdbook(&book_dir, &zh_dest, &zh_env) {
+            post_process_book_output(&zh_dest);
             println!("  ✓ zh/{slug}");
             zh_ok += 1;
         } else {
@@ -228,6 +230,419 @@ fn run_mdbook(book_dir: &Path, dest: &Path, envs: &[(&str, String)]) -> bool {
         .status()
         .expect("failed to run mdbook — is it installed?")
         .success()
+}
+
+fn post_process_book_output(book_dir: &Path) {
+    fs::write(book_dir.join("rt-book-nav.css"), book_nav_css())
+        .expect("failed to write rt-book-nav.css");
+    fs::write(book_dir.join("rt-book-nav.js"), book_nav_js())
+        .expect("failed to write rt-book-nav.js");
+
+    let mut html_files = Vec::new();
+    collect_html_files(book_dir, &mut html_files);
+
+    for html_file in html_files {
+        inject_book_nav_assets(&html_file);
+    }
+}
+
+fn collect_html_files(dir: &Path, files: &mut Vec<PathBuf>) {
+    let entries = fs::read_dir(dir).expect("failed to read book output dir");
+    for entry in entries {
+        let entry = entry.expect("failed to read dir entry");
+        let path = entry.path();
+        if path.is_dir() {
+            collect_html_files(&path, files);
+        } else if path.extension().and_then(|ext| ext.to_str()) == Some("html") {
+            files.push(path);
+        }
+    }
+}
+
+fn inject_book_nav_assets(html_file: &Path) {
+    let mut html = fs::read_to_string(html_file).expect("failed to read generated html");
+
+    if !html.contains("rt-book-nav.css") {
+        let link_tag = r#"<link rel="stylesheet" href="rt-book-nav.css">"#;
+        if let Some(idx) = html.rfind("</head>") {
+            html.insert_str(idx, &format!("        {link_tag}\n"));
+        }
+    }
+
+    if !html.contains("rt-book-nav.js") {
+        let script_tag = r#"<script src="rt-book-nav.js"></script>"#;
+        if let Some(idx) = html.rfind("</body>") {
+            html.insert_str(idx, &format!("    {script_tag}\n"));
+        }
+    }
+
+    fs::write(html_file, html).expect("failed to write patched html");
+}
+
+fn book_nav_css() -> &'static str {
+    r#"
+.rt-book-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-right: 0.7rem;
+}
+
+.rt-lang-switcher {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--theme-popup-border);
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--theme-popup-bg) 92%, transparent);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.rt-nav-pill,
+.rt-book-menu > summary {
+  min-height: 2rem;
+  border: 0;
+  color: var(--fg);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.rt-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.82rem;
+}
+
+.rt-nav-pill + .rt-nav-pill {
+  border-left: 1px solid color-mix(in srgb, var(--theme-popup-border) 72%, transparent);
+}
+
+.rt-nav-pill:hover,
+.rt-nav-pill:focus-visible,
+.rt-book-menu > summary:hover,
+.rt-book-menu > summary:focus-visible,
+.rt-book-link:hover,
+.rt-book-link:focus-visible {
+  background: var(--theme-hover);
+}
+
+.rt-nav-pill.is-active {
+  background: var(--sidebar-active);
+  color: var(--bg);
+  cursor: default;
+  pointer-events: none;
+}
+
+.rt-book-menu {
+  position: relative;
+}
+
+.rt-book-menu > summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  padding: 0 0.88rem;
+  border: 1px solid var(--theme-popup-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--theme-popup-bg) 92%, transparent);
+  user-select: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.rt-book-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.rt-book-menu[open] > summary {
+  background: var(--theme-hover);
+}
+
+.rt-book-menu-popup {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 1000;
+  width: min(24rem, 76vw);
+  padding: 0.5rem;
+  border: 1px solid var(--theme-popup-border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--theme-popup-bg) 96%, transparent);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.rt-book-menu-label {
+  display: block;
+  margin: 0.15rem 0.35rem 0.5rem;
+  color: var(--sidebar-fg);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rt-book-list {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.rt-book-link {
+  display: block;
+  padding: 0.72rem 0.82rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.rt-book-link:hover,
+.rt-book-link:focus-visible {
+  transform: translateY(-1px);
+}
+
+.rt-book-link-main {
+  display: block;
+  color: var(--fg);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.rt-book-link-sub {
+  display: block;
+  margin-top: 0.18rem;
+  color: var(--sidebar-fg);
+  font-size: 0.76rem;
+  line-height: 1.35;
+  opacity: 0.88;
+}
+
+.rt-book-menu-caret {
+  font-size: 0.72rem;
+  opacity: 0.82;
+}
+
+.rust .rt-lang-switcher,
+.rust .rt-book-menu > summary {
+  border-color: color-mix(in srgb, var(--theme-popup-border) 72%, #6a4d3c 28%);
+  background: color-mix(in srgb, var(--theme-popup-bg) 82%, #f2e7dc 18%);
+}
+
+.rust .rt-book-menu-popup {
+  background: color-mix(in srgb, var(--theme-popup-bg) 90%, #f6efe6 10%);
+}
+
+@media (max-width: 980px) {
+  .rt-book-nav {
+    gap: 0.42rem;
+    margin-right: 0.45rem;
+  }
+
+  .rt-nav-pill,
+  .rt-book-menu > summary {
+    min-height: 1.9rem;
+    padding-left: 0.72rem;
+    padding-right: 0.72rem;
+    font-size: 0.76rem;
+  }
+
+  .rt-book-menu-popup {
+    width: min(21rem, 82vw);
+  }
+}
+
+@media (max-width: 720px) {
+  .rt-book-nav {
+    width: 100%;
+    justify-content: flex-end;
+    margin-right: 0;
+    margin-top: 0.35rem;
+  }
+
+  .menu-bar .right-buttons {
+    flex-wrap: wrap;
+    row-gap: 0.35rem;
+  }
+
+  .rt-book-menu-popup {
+    right: 0;
+    width: min(19rem, 88vw);
+  }
+}
+"#
+}
+
+fn book_nav_js() -> String {
+    let books = BOOKS
+        .iter()
+        .map(|&(slug, title_en, title_zh, _, _, _)| {
+            format!(
+                r#"    {{ slug: "{slug}", titleEn: "{title_en}", titleZh: "{title_zh}" }}"#
+            )
+        })
+        .collect::<Vec<_>>()
+        .join(",\n");
+
+    format!(
+        r###"(function () {{
+  const BOOKS = [
+{books}
+  ];
+
+  function getContext() {{
+    const parts = window.location.pathname.split("/").filter(Boolean);
+    const slugIndex = parts.findIndex((part) => BOOKS.some((book) => book.slug === part));
+    if (slugIndex === -1) return null;
+
+    const slug = parts[slugIndex];
+    const bilingual = parts[slugIndex - 1] === "zh";
+    const prefixParts = parts.slice(0, bilingual ? slugIndex - 1 : slugIndex);
+    const suffixParts = parts.slice(slugIndex + 1);
+
+    return {{ slug, bilingual, prefixParts, suffixParts }};
+  }}
+
+  function buildPath(ctx, slug, bilingual, suffixParts, keepHash) {{
+    const parts = ctx.prefixParts.slice();
+    if (bilingual) parts.push("zh");
+    parts.push(slug);
+    if (suffixParts && suffixParts.length) {{
+      parts.push(...suffixParts);
+    }}
+
+    let path = "/" + parts.join("/");
+    if (!suffixParts || suffixParts.length === 0) {{
+      path += "/";
+    }}
+
+    if (keepHash && window.location.hash) {{
+      path += window.location.hash;
+    }}
+
+    return path;
+  }}
+
+  function makePill(label, href, active, title) {{
+    const el = document.createElement("a");
+    el.className = "rt-nav-pill" + (active ? " is-active" : "");
+    el.textContent = label;
+    el.title = title;
+    if (active) {{
+      el.setAttribute("aria-current", "page");
+    }} else {{
+      el.href = href;
+      el.rel = "nofollow";
+    }}
+    return el;
+  }}
+
+  function createLanguageSwitcher(ctx) {{
+    const wrap = document.createElement("div");
+    wrap.className = "rt-lang-switcher";
+
+    wrap.appendChild(
+      makePill(
+        "EN",
+        buildPath(ctx, ctx.slug, false, ctx.suffixParts, true),
+        !ctx.bilingual,
+        "切换到英文版"
+      )
+    );
+
+    wrap.appendChild(
+      makePill(
+        "中英",
+        buildPath(ctx, ctx.slug, true, ctx.suffixParts, true),
+        ctx.bilingual,
+        "切换到中英对照版"
+      )
+    );
+
+    return wrap;
+  }}
+
+  function createBookEntry(ctx, book) {{
+    const link = document.createElement("a");
+    link.className = "rt-book-link";
+    link.href = buildPath(ctx, book.slug, ctx.bilingual, [], false);
+
+    const primary = document.createElement("span");
+    primary.className = "rt-book-link-main";
+    primary.textContent = ctx.bilingual ? book.titleZh : book.titleEn;
+
+    const secondary = document.createElement("span");
+    secondary.className = "rt-book-link-sub";
+    secondary.textContent = ctx.bilingual ? book.titleEn : book.titleZh;
+
+    link.append(primary, secondary);
+    return link;
+  }}
+
+  function closeOpenMenus(event) {{
+    document.querySelectorAll(".rt-book-menu[open]").forEach((menu) => {{
+      if (!menu.contains(event.target)) {{
+        menu.removeAttribute("open");
+      }}
+    }});
+  }}
+
+  function createBookMenu(ctx) {{
+    const details = document.createElement("details");
+    details.className = "rt-book-menu";
+
+    const summary = document.createElement("summary");
+    summary.title = "切换到其他书籍";
+    summary.innerHTML = '<span>书籍</span><span class="rt-book-menu-caret">▾</span>';
+
+    const popup = document.createElement("div");
+    popup.className = "rt-book-menu-popup";
+
+    const label = document.createElement("div");
+    label.className = "rt-book-menu-label";
+    label.textContent = ctx.bilingual ? "Other Books 其他书籍" : "Other Books";
+
+    const list = document.createElement("div");
+    list.className = "rt-book-list";
+
+    BOOKS.filter((book) => book.slug !== ctx.slug).forEach((book) => {{
+      list.appendChild(createBookEntry(ctx, book));
+    }});
+
+    popup.append(label, list);
+    details.append(summary, popup);
+    return details;
+  }}
+
+  function mountBookNav() {{
+    const menuBar = document.querySelector("#mdbook-menu-bar .right-buttons");
+    if (!menuBar || menuBar.querySelector(".rt-book-nav")) return;
+
+    const ctx = getContext();
+    if (!ctx) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "rt-book-nav";
+    wrapper.append(createLanguageSwitcher(ctx), createBookMenu(ctx));
+
+    menuBar.insertBefore(wrapper, menuBar.firstElementChild);
+  }}
+
+  document.addEventListener("click", closeOpenMenus);
+
+  if (document.readyState === "loading") {{
+    document.addEventListener("DOMContentLoaded", mountBookNav, {{ once: true }});
+  }} else {{
+    mountBookNav();
+  }}
+}})();
+"###
+    )
 }
 
 fn write_landing_page(site: &Path) {
